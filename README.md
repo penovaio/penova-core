@@ -1,210 +1,274 @@
 # Penova Core
 
-Penova Core یک هستهٔ رایگان برای ساخت محصولات Laravel است؛ یک Laravel Product Factory که چیزهای تکراری اغلب پروژه‌ها (احراز هویت، کاربران، نقش‌ها، تنظیمات، نوتیفیکیشن‌ها، لاگ فعالیت، UI و DataTable) را یک‌بار برای همیشه حل می‌کند و آماده است تا ماژول‌های محصولی مانند Store، SMS و Payment روی آن نصب شوند.
+_Read this in: **English** (below) · [فارسی](#فارسی)_
 
-Penova Core is a free foundation for building Laravel products. It ships a production-ready Workspace (auth, users, roles, settings, notifications, activity log, UI components and a reusable DataTable) so you can focus on your product modules.
+Penova Core is the Laravel foundation for building modular monolith products with a
+Core + Modules architecture.
 
-این مخزن فقط Core است؛ هیچ ماژول بیزنسی (فروشگاه، CRM، Booking و غیره) در آن وجود ندارد.  
-Store Module و ماژول‌های دیگر به صورت جداگانه نصب می‌شوند.
+It ships a production-ready **Workspace** — authentication, users, roles and
+permissions, settings, notifications, an activity log, a UI component set and a
+reusable server-side DataTable — so you can focus on your product instead of
+rebuilding the same foundation every project.
 
-## ویژگی‌ها (Features)
+This repository is **Core only**: it contains no business modules (Store, CRM,
+Booking, …). Business capabilities install on top of Core as separate modules.
 
-Authentication  
-- جریان کامل ورود، ثبت‌نام (اختیاری)، فراموشی رمز و ریست رمز، روی GuestLayout.  
-- Full login, registration (optional), forgot password, and reset flows powered by Laravel auth.
+## What Penova Core is
 
-Users and Roles  
-- مدیریت کاربران، نقش‌ها و permissionها بدون نیاز به پکیج اضافی.  
-- Workspace screens for users, roles and permissions with a simple permission middleware.
+- A **free, complete Laravel core** that solves the parts repeated in most projects
+  once: auth, users, roles, settings, notifications, activity logs, UI and data
+  tables.
+- A **modular monolith**: one deployable application split into a product-agnostic
+  `app/Core` layer and a business-specific `app/Modules` layer. **Core never depends
+  on Modules; Modules build on Core.**
 
-Settings and White Label  
-- سیستم تنظیمات runtime با SettingsManager.  
-- صفحهٔ Settings شامل بخش Branding / White Label است: نام برند، لوگو، رنگ اصلی و متن فوتر را تنظیم می‌کنید و همان را در WorkspaceLayout و صفحهٔ Welcome می‌بینید.
+## Features
 
-Notifications  
-- استفاده از database notifications لاراول به عنوان سطح مشترک نوتیفیکیشن.  
-- یک صفحهٔ Notifications و badge اعلان‌ها در WorkspaceLayout برای همهٔ ماژول‌ها قابل استفاده است.
+- **Authentication** — login, optional registration, forgot/reset password.
+- **Users & Roles** — Workspace screens with a simple permission middleware, no
+  extra package required.
+- **Settings & White Label** — runtime settings plus branding (name, logo, color,
+  footer) reflected across the Workspace.
+- **Notifications** — Laravel database notifications as a shared surface, with an
+  unread badge available to every module.
+- **Activity Logs** — automatic created/updated/deleted logging via a trait.
+- **Workspace UI & Components** — ready layouts (Vue 3, Inertia 2, Tailwind 4) and
+  shared components: Button, TextInput, Modal, Toast, Pagination, DataTable.
+- **DataTable pattern** — a backend builder for server-side search/sort/pagination
+  and a matching `DataTable.vue` for any CRUD screen.
 
-Activity Logs  
-- ثبت خودکار created / updated / deleted برای مدل‌ها با trait RecordsActivity.  
-- صفحهٔ Logs در میزکار برای مشاهدهٔ فعالیت‌ها.
+## What is *not* in Core
 
-Workspace UI and Components  
-- WorkspaceLayout و GuestLayout آماده، مبتنی بر Vue 3، Inertia 2 و Tailwind 4.  
-- کامپوننت‌های مشترک: Button، TextInput، Modal، Toast، Pagination، DataTable.
+To keep Core product-agnostic, these install as separate modules: business modules
+(Store, CRM, Booking, …), cart/checkout, payment gateways, SMS/messaging, and
+domain-specific frontend pages.
 
-DataTable Pattern  
-- DataTableBuilder در backend برای جست‌وجو، مرتب‌سازی و صفحه‌بندی سمت سرور.  
-- DataTable.vue در frontend برای نمایش هر CRUD به صورت جدولی، با search و sort.
+## Requirements
 
-Modular Monolith Architecture  
-- app/Core شامل تمام قابلیت‌های shared و product-agnostic است.  
-- app/Modules برای ماژول‌های محصولی (Store، SMS، Payment و غیره).  
-- Core هرگز به Modules وابسته نمی‌شود؛ Modules روی Core ساخته می‌شوند.
+- PHP 8.2+
+- Composer
+- Node.js 18+ and npm (for the Vite frontend)
 
-## چه چیزهایی داخل Core نیست؟
+## Installation
 
-برای این‌که Core خالص و product-agnostic بماند، موارد زیر عمداً در این مخزن نیستند:
-
-- ماژول‌های بیزنسی مانند Store، CRM، Booking  
-- سبد خرید و Checkout  
-- درگاه‌های پرداخت  
-- سرویس پیامک  
-- صفحات frontend دامین‌محور (مانند فروشگاه یا CRM)
-
-این‌ها به صورت ماژول‌های جداگانه روی Core نصب می‌شوند.
-
-## شروع سریع (Quick Start)
-
-نصب (پیشنهادی — از طریق Composer):
+Install with Composer — a short **interactive setup** runs automatically:
 
 ```bash
 composer create-project penovaio/core my-app
+```
+
+Once the project is created, the setup asks a few questions — interface language,
+fallback language, timezone, starter profile (minimal / standard / full), database
+driver, and whether to build front-end assets — then configures your `.env`, runs
+the initial migration, and seeds the Operator account. In a non-interactive
+environment (CI) it uses safe defaults and never blocks.
+
+Then serve the app:
+
+```bash
 cd my-app
-php artisan penova:install    # migrate + ساخت حساب Operator
+php artisan serve
+```
+
+Prefer a manual clone? Clone the repository, install dependencies, then run the
+setup yourself:
+
+```bash
+git clone https://github.com/penovaio/penova-core.git && cd penova-core
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan penova:setup      # interactive; or: php artisan penova:install
 npm install && npm run build
 php artisan serve
 ```
 
-یا نصب دستی با clone:
+> **Front-end build.** `npm run build` / `npm run dev` regenerate the
+> module-frontend registry before Vite. Build the frontend through these scripts —
+> a bare `vite build` fails on a fresh checkout.
 
-```bash
-git clone https://github.com/penovaio/penova-core.git
-cd penova-core
+## Quick start
 
-cp .env.example .env
-composer install
-php artisan key:generate
+After the server is running:
 
-php artisan migrate --seed
+- `/` shows the welcome page, `/login` the login form, `/workspace` the
+  authenticated Workspace.
+- Default development credentials (change them anywhere real):
 
-npm install
-npm run build   # یا npm run dev برای توسعه
-php artisan serve
-```
+  | | |
+  |---|---|
+  | Email | `operator@example.com` |
+  | Password | `password` |
 
-> نکته: `npm run build` و `npm run dev` ابتدا رجیستریِ فرانت‌اندِ ماژول‌ها را می‌سازند؛
-> اجرای مستقیمِ `vite build` بدون آن با خطا مواجه می‌شود — همیشه از همین اسکریپت‌ها استفاده کنید.
+The interface is English by default; the setup can switch it to Persian, or set
+`APP_LOCALE=fa` in `.env` yourself. If anything goes wrong, see the
+[troubleshooting guide](docs/guides/troubleshooting-core.md).
 
-ورود به میزکار
+## Adding modules
 
-بعد از اجرای سرور:
-
-- صفحه اصلی (`/`) صفحه Welcome Penova Core را نشان می‌دهد.  
-- صفحه ورود (`/login`) فرم login را نمایش می‌دهد.
-
-هویت پیش‌فرض (برای محیط توسعه):
-
-- ایمیل: `operator@example.com`  
-- رمز: `password`
-
-بعد از ورود، میزکار را می‌بینید با:
-
-- Workspace  
-- Users  
-- Roles  
-- Settings (شامل White Label / Branding)  
-- Notifications  
-- Logs  
-
-> اگر در نصب یا ورود مشکلی پیش آمد، [راهنمای عیب‌یابی](docs/guides/troubleshooting-core.md) را ببینید.
-
-## White Label / Branding
-
-در میزکار به Settings بروید و بخش White Label / Branding را باز کنید. می‌توانید این موارد را تنظیم کنید:
-
-- Brand name: نامی که در WorkspaceLayout و صفحهٔ Welcome نمایش داده می‌شود.  
-- Logo URL: لینک لوگوی برند (اختیاری).  
-- Primary color: رنگ اصلی (برای استفادهٔ آینده در theme).  
-- Footer text: متن پایین میزکار و صفحهٔ Welcome.
-
-اگر چیزی تنظیم نکنید، Core از مقادیر پیش‌فرض در config/penova.php استفاده می‌کند.
-
-## افزودن ماژول‌ها (Store، SMS، Payment)
-
-Core از ابتدا برای نصب ماژول‌های بیزنسی آماده است.
-
-ساختار پیشنهادی:
-
-- app/Modules/Store  
-- app/Modules/Sms  
-- app/Modules/Payment  
-
-هر ماژول:
-
-- یک ServiceProvider دارد که در config/penova.php (آرایه modules) ثبت می‌شود.  
-- می‌تواند روت‌های admin و public خود را ثبت کند.  
-- می‌تواند منوهای میزکار را توسعه دهد.  
-- می‌تواند ویجت‌های Workspace اضافه کند.  
-- می‌تواند به Settings و Notifications متصل شود.
-
-نمونه نصب ServiceProvider یک ماژول:
+Core is built to host business modules. Each module ships its own service provider
+and declares what it contributes through a single Manifest. Wire one in by adding
+its provider to `config/penova.php`:
 
 ```php
-// config/penova.php
-
 'modules' => [
     App\Modules\Store\StoreServiceProvider::class,
-    App\Modules\Sms\SmsServiceProvider::class,
-    App\Modules\Payment\PaymentServiceProvider::class,
 ],
 ```
 
-جزئیات نصب هر ماژول در README مربوط به همان ماژول توضیح داده خواهد شد.
+See the [module author guide](app/Modules/README.md) for the full contract.
 
-## معماری در یک نگاه (Architecture Overview)
+## Documentation
 
-ساختار backend
+- [Getting started](docs/getting-started.md)
+- [Architecture overview](docs/architecture.md)
+- [Module author guide](app/Modules/README.md)
+- [Upgrading Core](docs/guides/upgrading-core.md)
+- [Troubleshooting](docs/guides/troubleshooting-core.md)
 
-- app/Core  
-  - Auth (login، register، reset)  
-  - Users  
-  - Roles و Permissions  
-  - Settings (+ Branding / White Label)  
-  - Notifications  
-  - Logs  
-  - DataTable  
-  - PenovaCoreServiceProvider (ثبت middleware، policies، boot ماژول‌ها از config/penova.php)
+## License
 
-- app/Modules  
-  - در Core خالی است؛ ماژول‌ها را جداگانه اضافه می‌کنید.
+Penova Core is released under the **MIT License** — see [LICENSE](LICENSE).
 
-ساختار frontend
+## Contributing
 
-- resources/js/Core  
-  - Layouts: WorkspaceLayout.vue، GuestLayout.vue  
-  - Components: Button، TextInput، Modal، Toast، Pagination، DataTable  
-  - Pages: Auth (Login، Register، Reset)، Workspace، Users، Roles، Settings، Logs، Notifications  
-  - Welcome.vue: صفحهٔ خوش‌آمد Core در روت `/`
+Suggestions, bug reports and pull requests that improve Core (not product modules)
+are welcome — especially Workspace UX/UI, wider integration test coverage, and the
+module contract.
 
-Pages مربوط به Store / SMS / Payment در resources/js/Modules/* قرار خواهند گرفت، نه در Core.
+---
 
-## برای چه کسانی مناسب است؟ (Who is it for?)
+# فارسی
 
-- توسعه‌دهندهٔ Laravel که نمی‌خواهد برای هر پروژه احراز هویت، کاربران، نقش‌ها، تنظیمات و لاگ‌ها را از صفر بسازد.  
-- کسی که می‌خواهد یک فروشگاه یا محصول دیگری را روی یک هستهٔ تمیز و قابل‌گسترش بسازد.  
-- کسی که در آینده به چند محصول/ماژول روی یک Core مشترک فکر می‌کند.
+_[English](#penova-core) بالا · **فارسی** در این بخش_
 
-اگر تنها یک اپلیکیشن کوچک و یک‌باره می‌سازید، شاید این سطح از معماری برایتان زیاد باشد.  
-اگر به یک هستهٔ مشترک برای چند محصول نیاز دارید، Penova Core برای همین طراحی شده است.
+Penova Core هستهٔ لاراولی برای ساختِ محصولاتِ modular monolith با معماری Core + Modules
+است.
 
-## وضعیت پروژه (Project Status)
+یک **میزکارِ (Workspace) آمادهٔ تولید** ارائه می‌دهد — احراز هویت، کاربران، نقش‌ها و
+دسترسی‌ها، تنظیمات، اعلان‌ها، لاگِ فعالیت، مجموعه‌کامپوننت‌های UI و یک DataTableِ
+سمت‌سرورِ قابل‌استفادهٔ مجدد — تا به‌جای بازسازیِ همان زیرساخت در هر پروژه، روی محصولِ
+خودتان تمرکز کنید.
 
-- Core features (auth، users، roles، settings، notifications، logs، UI، DataTable) پیاده‌سازی شده‌اند.  
-- White Label / Branding در Settings موجود است.  
-- ماژول‌های Store, Sms, Payment به عنوان پروژه‌های جداگانه توسعه داده می‌شوند.  
-- ماژول‌های CRM / Booking عمداً در Core نیستند و اگر اضافه شوند، به‌صورت ماژول مستقل خواهند بود، نه بخشی از Core.
+این مخزن **فقط Core** است؛ هیچ ماژولِ بیزنسی (Store، CRM، Booking، …) ندارد. قابلیت‌های
+بیزنسی به‌صورتِ ماژول‌های جداگانه روی Core نصب می‌شوند.
 
-## لایسنس (License)
+## Penova Core چیست
 
-Penova Core تحت لایسنس **MIT** منتشر می‌شود؛ متن کامل در فایل [LICENSE](LICENSE).
+- یک **هستهٔ رایگان و کاملِ لاراول** که بخش‌های تکرارشونده در بیشترِ پروژه‌ها را یک‌بار
+  حل می‌کند: احراز هویت، کاربران، نقش‌ها، تنظیمات، اعلان‌ها، لاگِ فعالیت، UI و جدول‌های
+  داده.
+- یک **modular monolith**: یک اپلیکیشنِ قابل‌استقرار که به لایهٔ product-agnosticِ
+  `app/Core` و لایهٔ بیزنسیِ `app/Modules` تقسیم شده است. **Core هرگز به Modules وابسته
+  نیست؛ Modules روی Core ساخته می‌شوند.**
 
-Released under the **MIT License** — see [LICENSE](LICENSE).
+## ویژگی‌ها
 
-## مشارکت (Contributing)
+- **احراز هویت** — ورود، ثبت‌نامِ اختیاری، فراموشی/بازیابیِ رمز.
+- **کاربران و نقش‌ها** — صفحاتِ میزکار با یک middlewareِ ساده، بدونِ پکیجِ اضافه.
+- **تنظیمات و White Label** — تنظیماتِ runtime به‌همراه برندینگ (نام، لوگو، رنگ، فوتر)
+  که در سراسرِ میزکار بازتاب می‌یابد.
+- **اعلان‌ها** — database notificationsِ لاراول به‌عنوان سطحِ مشترک، با badgeِ
+  خوانده‌نشده برای همهٔ ماژول‌ها.
+- **لاگِ فعالیت** — ثبتِ خودکارِ created/updated/deleted از طریقِ یک trait.
+- **UI و کامپوننت‌های میزکار** — layoutهای آماده (Vue 3، Inertia 2، Tailwind 4) و
+  کامپوننت‌های مشترک: Button، TextInput، Modal، Toast، Pagination، DataTable.
+- **الگوی DataTable** — یک builder در backend برای search/sort/paginationِ سمت‌سرور و
+  `DataTable.vue`ِ متناظر برای هر صفحهٔ CRUD.
 
-پیشنهادها، باگ‌ریپورت‌ها و Pull Requestها برای بهبود Core (نه ماژول‌های محصولی) استقبال می‌شوند، به‌خصوص در این بخش‌ها:
+## چه چیزهایی داخلِ Core نیست
 
-- بهبود UX / UI میزکار.  
-- افزایش سطح تست‌های یکپارچه برای Core.  
-- پیشنهاد برای بهبود قرارداد ماژول‌ها (Store، Sms، Payment).
+برای این‌که Core محصول-محور نماند، این موارد به‌صورتِ ماژولِ جداگانه نصب می‌شوند: ماژول‌های
+بیزنسی (Store، CRM، Booking، …)، سبد خرید/Checkout، درگاه‌های پرداخت، پیامک/پیام‌رسانی، و
+صفحاتِ frontendِ دامین‌محور.
+
+## پیش‌نیازها
+
+- PHP 8.2+
+- Composer
+- Node.js 18+ و npm (برای frontendِ Vite)
+
+## نصب
+
+با Composer نصب کنید — یک **setup تعاملیِ کوتاه** خودکار اجرا می‌شود:
+
+```bash
+composer create-project penovaio/core my-app
+```
+
+پس از ساختِ پروژه، setup چند پرسش می‌پرسد — زبانِ رابط، زبانِ fallback، timezone،
+پروفایلِ شروع (minimal / standard / full)، درایورِ پایگاه‌داده، و این‌که assets فرانت‌اند
+build شوند یا نه — سپس `.env` را پیکربندی می‌کند، migrationِ اولیه را اجرا می‌کند و حسابِ
+Operator را seed می‌کند. در محیطِ غیرتعاملی (CI) از مقادیرِ امنِ پیش‌فرض استفاده می‌کند و
+هرگز متوقف نمی‌شود.
+
+سپس اپ را اجرا کنید:
+
+```bash
+cd my-app
+php artisan serve
+```
+
+نصبِ دستی با clone را ترجیح می‌دهید؟ مخزن را clone کنید، وابستگی‌ها را نصب کنید، و setup را
+خودتان اجرا کنید:
+
+```bash
+git clone https://github.com/penovaio/penova-core.git && cd penova-core
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan penova:setup      # تعاملی؛ یا: php artisan penova:install
+npm install && npm run build
+php artisan serve
+```
+
+> **ساختِ frontend.** `npm run build` / `npm run dev` پیش از Vite رجیستریِ فرانت‌اندِ
+> ماژول‌ها را می‌سازند. frontend را از طریقِ همین اسکریپت‌ها build کنید — اجرای مستقیمِ
+> `vite build` روی checkoutِ تازه با خطا مواجه می‌شود.
+
+## شروعِ سریع
+
+پس از اجرای سرور:
+
+- `/` صفحهٔ خوش‌آمد، `/login` فرمِ ورود، و `/workspace` میزکارِ احرازشده را نشان می‌دهد.
+- هویتِ پیش‌فرضِ توسعه (در هر محیطِ واقعی تغییرش دهید):
+
+  | | |
+  |---|---|
+  | ایمیل | `operator@example.com` |
+  | رمز | `password` |
+
+رابط به‌صورتِ پیش‌فرض انگلیسی است؛ setup می‌تواند آن را به فارسی تغییر دهد، یا خودتان
+`APP_LOCALE=fa` را در `.env` قرار دهید. اگر مشکلی پیش آمد، [راهنمای عیب‌یابی](docs/guides/troubleshooting-core.md)
+را ببینید.
+
+## افزودنِ ماژول‌ها
+
+Core برای میزبانیِ ماژول‌های بیزنسی ساخته شده است. هر ماژول ServiceProviderِ خودش را دارد و
+آنچه را ارائه می‌دهد از طریقِ یک Manifest اعلام می‌کند. یک ماژول را با افزودنِ providerش به
+`config/penova.php` وصل کنید:
+
+```php
+'modules' => [
+    App\Modules\Store\StoreServiceProvider::class,
+],
+```
+
+راهنمای کاملِ نویسندهٔ ماژول را در [app/Modules/README.md](app/Modules/README.md) ببینید.
+
+## مستندات
+
+- [شروع به کار](docs/getting-started.md)
+- [مروری بر معماری](docs/architecture.md)
+- [راهنمای نویسندهٔ ماژول](app/Modules/README.md)
+- [ارتقای Core](docs/guides/upgrading-core.md)
+- [عیب‌یابی](docs/guides/troubleshooting-core.md)
+
+## لایسنس
+
+Penova Core تحت لایسنس **MIT** منتشر می‌شود — متنِ کامل در فایل [LICENSE](LICENSE).
+
+## مشارکت
+
+پیشنهادها، گزارشِ باگ و Pull Requestهایی که Core را بهتر می‌کنند (نه ماژول‌های محصولی)
+استقبال می‌شوند — به‌ویژه UX/UIِ میزکار، پوششِ بیشترِ تست‌های یکپارچه، و قراردادِ ماژول.
