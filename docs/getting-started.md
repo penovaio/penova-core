@@ -1,9 +1,23 @@
 # Penova Core — Getting Started
 
-Penova Core lives in a plain Laravel application repository (it is not a
-Composer package yet): clone it, then install.
+Penova Core is a Laravel application you install with Composer (or clone directly).
 
-## Setup
+## Install (recommended)
+
+```bash
+composer create-project penovaio/core my-app && cd my-app
+php artisan penova:install    # migrate + seed the Operator account
+npm install && npm run build
+php artisan serve
+```
+
+`create-project` installs dependencies and, via its post-install scripts, creates
+`.env`, generates the app key, and runs the initial migration; `penova:install`
+then seeds the Operator account. By default this uses **SQLite** — no database
+setup needed. (Prefer MySQL? Set `DB_CONNECTION=mysql` and the `DB_*` values in
+`.env` before `penova:install`; see `guides/troubleshooting-core.md`.)
+
+## Setup from a clone (alternative)
 
 ```bash
 git clone https://github.com/penovaio/penova-core.git && cd penova-core
@@ -11,14 +25,7 @@ composer install
 npm install
 cp .env.example .env
 php artisan key:generate
-
-# .env.example defaults to SQLite — no database setup needed. (Prefer MySQL? Set
-# DB_CONNECTION=mysql and the DB_* values first; see guides/troubleshooting-core.md.)
-# Then either:
 php artisan penova:install          # = migrate + seed (add --fresh to start over)
-# or the underlying commands yourself:
-php artisan migrate --seed
-
 npm run build       # or keep Vite running via the dev script below
 composer run dev    # serves the app + queue + logs + Vite
 ```

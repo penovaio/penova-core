@@ -17,7 +17,7 @@ return [
     'name' => env('PENOVA_NAME', 'Penova'),
 
     // Platform version, shown in the Workspace hero and What's New.
-    'version' => env('PENOVA_VERSION', '1.0.0-rc.1'),
+    'version' => env('PENOVA_VERSION', '1.0.0'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,16 @@ return [
     ],
 
     'changelog' => [
+        [
+            'version' => '1.0.0',
+            'date' => '2026-07-12',
+            'highlights' => [
+                'First stable release',
+                'Store decoupled — Core boots complete with no business module',
+                'Locale-neutral UI: English base, Persian opt-in',
+                'Operator / Workspace across install, login and docs',
+            ],
+        ],
         [
             'version' => '1.0.0-rc.1',
             'date' => '2026-07-12',

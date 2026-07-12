@@ -56,7 +56,17 @@ Modular Monolith Architecture
 
 ## شروع سریع (Quick Start)
 
-نصب
+نصب (پیشنهادی — از طریق Composer):
+
+```bash
+composer create-project penovaio/core my-app
+cd my-app
+php artisan penova:install    # migrate + ساخت حساب Operator
+npm install && npm run build
+php artisan serve
+```
+
+یا نصب دستی با clone:
 
 ```bash
 git clone https://github.com/penovaio/penova-core.git
