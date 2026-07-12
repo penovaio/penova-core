@@ -7,7 +7,16 @@ misbehaves see [docs/guides/troubleshooting-core.md](docs/guides/troubleshooting
 Penova Core follows semantic versioning: breaking changes to the public contract
 land only on a MAJOR, always with a documented migration path.
 
-## [1.0.2] — 2026-07-12
+## [1.0.3] - 2026-07-12
+
+A patch that makes the install a single command. No changes to the public contract.
+
+- **One-command install.** `composer create-project` now finishes a ready-to-run
+  project: `penova:setup` configures `.env`, migrates, seeds the Operator account,
+  and installs and builds the front-end. `php artisan serve` is the only step left.
+- **Docs.** README and getting-started updated to the one-command flow.
+
+## [1.0.2] - 2026-07-12
 
 A patch focused on the install experience. No changes to the public contract.
 
@@ -19,15 +28,15 @@ A patch focused on the install experience. No changes to the public contract.
 - **Quieter install.** Moved the inline test fixtures into their own files, so
   `composer create-project` no longer prints PSR-4 autoload warnings.
 
-## [1.0.1] — 2026-07-12
+## [1.0.1] - 2026-07-12
 
 A first patch focused on the install experience and public-release housekeeping.
 No changes to the public contract.
 
 - **Interactive setup.** `composer create-project` now finishes with a short
-  guided setup (`php artisan penova:setup`) — interface language, fallback
+  guided setup (`php artisan penova:setup`) - interface language, fallback
   language, timezone, starter profile (minimal / standard / full), database
-  driver, and an optional front-end build — then writes `.env`, migrates, and
+  driver, and an optional front-end build - then writes `.env`, migrates, and
   seeds the Core baseline. It falls back to safe defaults in non-interactive
   environments (CI, no TTY), so an automated install never blocks.
 - **Configurable timezone.** The application timezone is now driven by
@@ -35,7 +44,7 @@ No changes to the public contract.
 - **License.** Added the MIT License.
 - **Documentation.** The README is now bilingual (English, then Persian).
 
-## [1.0.0] — 2026-07-12
+## [1.0.0] - 2026-07-12
 
 First stable release of Penova Core. The public surface below is now stable under
 semantic versioning.
@@ -44,13 +53,13 @@ semantic versioning.
   `widgets`, `permissions`), the configuration format, and the Workspace
   routes/prefix (`penova.workspace.*`) with the Operator role.
 - **Experimental** (may change or be withdrawn without a MAJOR): the module-frontend
-  seam — the Manifest `frontend` section and its coordinate.
+  seam - the Manifest `frontend` section and its coordinate.
 - **Internal** (not a contract): the concrete Resource shape and the Workspace
   widget pipeline.
 
 Install: `composer create-project penovaio/core my-app`.
 
-## [1.0.0-rc.1] — 2026-07-12
+## [1.0.0-rc.1] - 2026-07-12
 
 First release candidate toward 1.0.0.
 
@@ -67,7 +76,7 @@ First release candidate toward 1.0.0.
   (`/workspace`) and the seeded role is the Operator; install, login and docs use
   this vocabulary. The legacy `PENOVA_ADMIN_*` env vars are honoured for one cycle.
 
-## [0.1.0] — 2026-07-06
+## [0.1.0] - 2026-07-06
 
 - White Label / Branding in Settings.
 - Onboarding Workspace.
