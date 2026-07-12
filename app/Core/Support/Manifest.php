@@ -94,10 +94,10 @@ final class Manifest implements Arrayable, JsonSerializable
      *
      *   ->frontend([
      *       'widgets' => [
-     *           ['key' => 'store-active-products', 'entry' => 'widgets/ActiveProductsCard'],
+     *           ['key' => 'blog-recent-posts', 'entry' => 'widgets/RecentPostsCard'],
      *       ],
      *       'pages' => [
-     *           ['name' => 'Store/Products/Index', 'entry' => 'pages/Products/Index'],
+     *           ['name' => 'Blog/Posts/Index', 'entry' => 'pages/Posts/Index'],
      *       ],
      *   ])
      *

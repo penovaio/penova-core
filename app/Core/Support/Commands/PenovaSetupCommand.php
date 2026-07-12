@@ -48,7 +48,7 @@ class PenovaSetupCommand extends Command
     ];
 
     /** Starter profiles, from lightest to fullest. */
-    private const PROFILES = ['minimal', 'standard', 'full'];
+    private const PROFILES = ['minimal', 'standard'];
 
     /** Supported database drivers. */
     private const DRIVERS = ['sqlite', 'mysql', 'pgsql'];
@@ -108,7 +108,7 @@ class PenovaSetupCommand extends Command
         $fallback = $this->choice('Fallback language (en = English, fa = Persian)', self::LANGUAGES, 0);
         $timezone = $this->choice('Timezone', self::TIMEZONES, 0);
         $profile = $this->choice(
-            'Starter profile (minimal = Core only, standard = + branding, full = + Store demo)',
+            'Starter profile (minimal = Core only, standard = + default branding)',
             self::PROFILES,
             1,
         );
@@ -282,7 +282,6 @@ class PenovaSetupCommand extends Command
      *
      * - minimal:  nothing extra (baseline only).
      * - standard: seed default branding so the White Label screen starts filled.
-     * - full:     standard, plus enable the Store reference module (demo).
      */
     private function applyProfile(string $profile): void
     {
@@ -291,10 +290,6 @@ class PenovaSetupCommand extends Command
         }
 
         $this->seedDefaultBranding();
-
-        if ($profile === 'full') {
-            $this->enableStoreModule();
-        }
     }
 
     /** Persist the config branding defaults as runtime settings. */
@@ -307,38 +302,6 @@ class PenovaSetupCommand extends Command
         }
     }
 
-    /**
-     * Enable the in-repo Store reference module: add its provider to
-     * config/penova.php, then migrate and seed it in a fresh process so the
-     * provider boots and its migrations register.
-     */
-    private function enableStoreModule(): void
-    {
-        $provider = 'App\\Modules\\Store\\StoreServiceProvider::class';
-        $configPath = base_path('config/penova.php');
-        $contents = File::get($configPath);
-
-        // Already enabled (uncommented)? Then just make sure it is migrated/seeded.
-        $enabled = (bool) preg_match('/^\s*'.preg_quote($provider, '/').'/m', $contents);
-
-        if (! $enabled) {
-            $contents = str_replace(
-                "    'modules' => [\n",
-                "    'modules' => [\n        {$provider},\n",
-                $contents,
-            );
-            File::put($configPath, $contents);
-        }
-
-        // A separate process boots with Store enabled, so its migrations
-        // register and only they run (the Core tables already exist).
-        $this->runArtisan(['migrate', '--force'], 'Migrating the Store module...');
-        $this->runArtisan(
-            ['db:seed', '--class=App\\Modules\\Store\\Database\\Seeders\\StorePermissionsSeeder', '--force'],
-            'Seeding Store permissions...',
-        );
-    }
-
     /** Install and build the front-end assets, tolerating a missing toolchain. */
     private function buildAssets(): void
     {
@@ -346,13 +309,6 @@ class PenovaSetupCommand extends Command
         // platform (npm.cmd on Windows, npm elsewhere).
         $this->runProcess(Process::fromShellCommandline('npm install', base_path()), 'Installing front-end packages...', 'npm install');
         $this->runProcess(Process::fromShellCommandline('npm run build', base_path()), 'Building front-end assets...', 'npm run build');
-    }
-
-    /** Run an artisan subcommand in a fresh process (fresh application boot). */
-    private function runArtisan(array $arguments, string $message): void
-    {
-        $command = array_merge([PHP_BINARY, base_path('artisan')], $arguments);
-        $this->runProcess(new Process($command, base_path()), $message, implode(' ', $arguments));
     }
 
     /** Run an external process; a failure is reported, not fatal. */

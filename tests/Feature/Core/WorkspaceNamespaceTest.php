@@ -37,8 +37,7 @@ test('Workspace routes resolve from the configured Workspace prefix', function (
 
     expect($prefix)->not->toBeEmpty();
     // Config-driven, not a hardcoded "/admin": Core Workspace routes live under
-    // whatever prefix is configured. (A Module route honoring the same prefix
-    // is covered in the Store lane — Feature/Store/ModuleCompositionTest.)
+    // whatever prefix is configured.
     expect(route('penova.users.index', absolute: false))->toStartWith("/{$prefix}/");
 });
 

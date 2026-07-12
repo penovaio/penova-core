@@ -26,7 +26,7 @@ test('an owner can save branding and it overrides the config defaults', function
     $this->put(route('penova.settings.update'), [
         'settings' => [
             'branding' => [
-                'name' => 'Acme Store',
+                'name' => 'Acme Inc.',
                 'logo_url' => 'https://example.com/logo.png',
                 'primary_color' => '#123456',
                 'footer_text' => 'Powered by Acme',
@@ -41,7 +41,7 @@ test('an owner can save branding and it overrides the config defaults', function
 
     $this->get('/')
         ->assertInertia(fn (Assert $page) => $page
-            ->where('branding.name', 'Acme Store')
+            ->where('branding.name', 'Acme Inc.')
             ->where('branding.logo_url', 'https://example.com/logo.png'));
 });
 
@@ -104,7 +104,7 @@ test('saving branding alongside generic settings persists all of them', function
         'settings' => [
             'site_name' => 'Acme Panel',
             'contact_email' => 'hi@acme.test',
-            'branding' => ['name' => 'Acme Store'],
+            'branding' => ['name' => 'Acme Inc.'],
         ],
     ])->assertRedirect();
 

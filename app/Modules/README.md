@@ -1,12 +1,12 @@
 # app/Modules — Product Modules
 
-Business-specific products (Store, CMS, …) live here, one folder
+Business-specific products (CRM, CMS, …) live here, one folder
 per module. **Core never imports from this namespace** — modules build on
 Core, not the other way around. If code is reusable across two modules,
 it belongs in `app/Core`.
 
-A working reference module ships in this repo: `Store`
-(real CRUD + widgets + permissions).
+Core ships with **no bundled business module**; this guide uses a
+hypothetical `Blog` module as its worked example.
 
 Start a new module with the scaffolder — it creates the whole anatomy
 below (provider implementing the contract, routes.php, backend and
@@ -19,8 +19,8 @@ php artisan penova:module Reports
 ## Anatomy of a module
 
 ```
-app/Modules/Store/
-  StoreServiceProvider.php     ← the module's single entry point
+app/Modules/Blog/
+  BlogServiceProvider.php      ← the module's single entry point
   routes.php                   ← module routes (invokable controllers)
   Controllers/                 ← ONE invokable class per route action
   Models/
@@ -28,14 +28,14 @@ app/Modules/Store/
   Policies/
   Database/
     Migrations/                ← loadMigrationsFrom() in the provider
-    Seeders/                   ← StorePermissionsSeeder (see Permissions)
+    Seeders/                   ← BlogPermissionsSeeder (see Permissions)
 ```
 
-Frontend lives in `resources/js/Modules/Store/`:
+Frontend lives in `resources/js/Modules/Blog/`:
 
 ```
-resources/js/Modules/Store/
-  Pages/       ← Inertia pages: Inertia::render('Modules/Store/Products/Index')
+resources/js/Modules/Blog/
+  Pages/       ← Inertia pages: Inertia::render('Modules/Blog/Posts/Index')
   Widgets/     ← widget components, one per declared widget
   Components/  ← module-private components (e.g. a shared form)
 ```
@@ -57,10 +57,10 @@ frontend contributions, and a **generated, git-ignored registry** resolves them:
    ```php
    ->frontend([
        'widgets' => [
-           ['key' => 'store-active-products', 'entry' => 'Widgets/ActiveProductsCard'],
+           ['key' => 'blog-recent-posts', 'entry' => 'Widgets/RecentPostsCard'],
        ],
        'pages' => [
-           ['name' => 'Modules/Store/Products/Index', 'entry' => 'Pages/Products/Index'],
+           ['name' => 'Modules/Blog/Posts/Index', 'entry' => 'Pages/Posts/Index'],
        ],
    ])
    ```
@@ -81,7 +81,7 @@ frontend contributions, and a **generated, git-ignored registry** resolves them:
    ```php
    public static function frontendSource(): string
    {
-       return '@/Modules/Store';
+       return '@/Modules/Blog';
    }
    ```
 
@@ -120,7 +120,7 @@ touches shared configuration:
 
 ```php
 'modules' => [
-    App\Modules\Store\StoreServiceProvider::class,
+    App\Modules\Blog\BlogServiceProvider::class,
 ],
 ```
 
@@ -145,16 +145,16 @@ use App\Core\Support\Manifest;
 use App\Core\Support\PenovaModule;
 use Illuminate\Support\ServiceProvider;
 
-class StoreServiceProvider extends ServiceProvider implements PenovaModule
+class BlogServiceProvider extends ServiceProvider implements PenovaModule
 {
     public function boot(): void { /* load routes, migrations */ }
 
     public static function manifest(): Manifest
     {
         return Manifest::for(
-            key: 'store',
-            name: 'Store',
-            description: 'Products, orders and checkout.',
+            key: 'blog',
+            name: 'Blog',
+            description: 'Posts and publishing.',
             version: '0.1.0',
         )
             ->menu([ /* sidebar items — see below */ ])
@@ -174,13 +174,13 @@ by `order`. Use `order >= 100` for module items.
 
 ```php
 ->menu([[
-    'key'   => 'store',          // unique across the panel
-    'label' => 'فروشگاه',
-    'route' => 'store.products.index', // route NAME — Core resolves the URL
-    'icon'  => 'bag',            // icon key; the map lives in WorkspaceLayout.vue
+    'key'   => 'blog',           // unique across the panel
+    'label' => 'Blog',
+    'route' => 'blog.posts.index', // route NAME — Core resolves the URL
+    'icon'  => 'clipboard',      // icon key; the map lives in WorkspaceLayout.vue
                                  // (home|users|shield|cog|clock|bell|calendar|bag|clipboard|sparkles|squares)
     'order' => 100,
-    'permission' => 'store.view', // optional; hides the item from users
+    'permission' => 'blog.view', // optional; hides the item from users
                                     // without the permission — keep it in
                                     // sync with the route's middleware
 ]])
@@ -200,13 +200,13 @@ the Modules card), so modules land in the middle with `order >= 100`.
 
 ```php
 ->widgets([[
-    'key'       => 'store-active-products', // joins to the frontend entry (below)
+    'key'       => 'blog-recent-posts', // joins to the frontend entry (below)
     'type'      => 'card',            // 'card' | 'list'
-    'title'     => 'محصولات فعال',    // arrives as widget.title in Vue
+    'title'     => 'Recent posts',    // arrives as widget.title in Vue
     'cols'      => 1,                 // 1 | 2 | 'full' (whole row, any grid width)
     'order'     => 100,
-    'area'      => 'store',           // widget area (see below)
-    'permission' => 'store.view',     // optional; widget is dropped for users
+    'area'      => 'blog',            // widget area (see below)
+    'permission' => 'blog.view',      // optional; widget is dropped for users
                                       // without it (match the data endpoint's
                                       // middleware so it never 403s)
 ]])
@@ -219,24 +219,24 @@ separately, in the experimental `frontend` section, and joined by the shared
 
 **Areas.** A widget grid, when enabled, groups one headed section per `area`, so a
 module's widgets stay visually grouped. Recommended: give your module its
-own area named after it (`'area' => 'store'`) and reuse it on every
+own area named after it (`'area' => 'blog'`) and reuse it on every
 widget the module ships. Omitting `area` drops the widget into the
 default `core` group. Section headings come from
 `config('penova.widgets.areas')` — add your key there for a proper label;
 unknown keys fall back to a label formatted from the key itself
-(`store-extras` → "Store Extras").
+(`blog-extras` → "Blog Extras").
 
 **Widget data.** Descriptors are layout-only. A widget component receives
 its descriptor as the `widget` prop and owns its data: read the shared /
 page Inertia props, or fetch a small module JSON endpoint on mount (see
-`ActiveProductsCard.vue` + `ActiveProductsCountController`).
+`RecentPostsCard.vue` + `RecentPostsCountController`).
 
 ### The `permissions` section — declared permission slugs
 
 The flat list of permission slugs the module introduces:
 
 ```php
-->permissions(['store.view', 'store.manage'])
+->permissions(['blog.view', 'blog.manage'])
 ```
 
 This section is the module's **single declaration** of the permissions it
@@ -252,8 +252,8 @@ Guard module routes with the permission middleware, split by intent —
 for create/edit actions:
 
 ```php
-Route::middleware('permission:store.view')->group(...);
-Route::middleware('permission:store.manage')->group(...);
+Route::middleware('permission:blog.view')->group(...);
+Route::middleware('permission:blog.manage')->group(...);
 ```
 
 Seed the permissions from the module's own seeder
@@ -270,20 +270,20 @@ Every route action — Core and Modules alike — is **one invokable
 controller class**. Naming convention: `{Verb}{Subject}Controller`, verbs
 from this set:
 
-| Verb    | Action                       | Example                    |
-|---------|------------------------------|----------------------------|
-| List    | index page                   | `ListProductsController`   |
-| Show    | single page / form display   | `ShowProductController`    |
-| Create  | "new X" form page            | `CreateProductController`  |
-| Store   | persist a new record         | `StoreProductController`   |
-| Edit    | "edit X" form page           | `EditProductController`    |
-| Update  | apply edits                  | `UpdateProductController`  |
-| Delete  | destroy                      | `DeleteProductController`  |
+| Verb    | Action                       | Example                 |
+|---------|------------------------------|-------------------------|
+| List    | index page                   | `ListPostsController`   |
+| Show    | single page / form display   | `ShowPostController`    |
+| Create  | "new X" form page            | `CreatePostController`  |
+| Store   | persist a new record         | `StorePostController`   |
+| Edit    | "edit X" form page           | `EditPostController`    |
+| Update  | apply edits                  | `UpdatePostController`  |
+| Delete  | destroy                      | `DeletePostController`  |
 
-(`{Subject}{Verb}Controller` — `ProductIndexController`,
-`OrderShowController` — is an accepted equivalent; pick one style per
+(`{Subject}{Verb}Controller` — `PostIndexController`,
+`PostShowController` — is an accepted equivalent; pick one style per
 module and stay consistent.) Widget data endpoints follow the same rule:
-`ActiveProductsCountController`.
+`RecentPostsCountController`.
 
 Module routes reuse the panel middleware + URI prefix from config, but own
 their route-name prefix (never `penova.*`). Keep `routes.php` plain and
@@ -300,8 +300,8 @@ public function boot(): void
 }
 ```
 
-Register static paths (e.g. `/store/products/active-count`) **before**
-parameterised ones (`/store/products/{product}`) so they are never
+Register static paths (e.g. `/blog/posts/recent-count`) **before**
+parameterised ones (`/blog/posts/{post}`) so they are never
 captured by route-model binding.
 
 ## Future sections (not implemented yet)

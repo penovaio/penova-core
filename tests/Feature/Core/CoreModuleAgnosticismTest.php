@@ -13,16 +13,12 @@
  * that must teach no specific business Module, even in commentary; its module list
  * is opaque provider class-strings).
  *
- * The ONLY exceptions — both narrow and explicit:
- *   1. the generated registry (`resources/js/generated`) — a git-ignored BUILD
- *      ARTIFACT, not Core source; its concrete `@/Modules/<Name>` specifiers are
- *      registry OUTPUT, not Core knowledge; and
- *   2. explicitly designated Store-INTEGRATION test fixtures — tests whose stated
- *      purpose is to prove the Store-enabled lane, where Store is the in-repo
- *      reference Module needed to demonstrate the accepted seam.
- * Everything else — production Core code, config, build aliases, generic
- * unit/contract tests, docs, and any assertion describing Core's general behaviour
- * — must stay Store-free. The exclusion is surgical, never a broad tree skip.
+ * The ONLY exception is narrow and explicit: the generated registry
+ * (`resources/js/generated`) is a git-ignored BUILD ARTIFACT, not Core source;
+ * its concrete `@/Modules/<Name>` specifiers are registry OUTPUT, not Core
+ * knowledge. Everything else — production Core code, config, and build aliases —
+ * must name no specific Module. Generic placeholders (`@/Modules/<Name>`,
+ * `@/Modules/{key}`) are fine; a concrete module directory name is not.
  */
 
 function coreSourceFiles(): array
@@ -48,11 +44,13 @@ function coreSourceFiles(): array
 }
 
 test('no Core source names a specific Module', function () {
+    // A representative concrete module name: Core must never carry it in code.
+    // Generic placeholders (@/Modules/<Name>, @/Modules/{key}) are allowed.
     foreach (coreSourceFiles() as $file) {
         $source = (string) file_get_contents($file);
 
-        expect($source)->not->toContain('Modules/Store');   // JS / Inertia name
-        expect($source)->not->toContain('Modules\\Store');  // PHP namespace
+        expect($source)->not->toContain('Modules/Blog');   // JS / Inertia name
+        expect($source)->not->toContain('Modules\\Blog');  // PHP namespace
     }
 });
 

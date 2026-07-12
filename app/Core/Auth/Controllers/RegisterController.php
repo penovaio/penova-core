@@ -35,8 +35,8 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        // intended(): a guest sent here from a guarded page (e.g. store
-        // checkout) lands back where they were going, not on the panel.
+        // intended(): a guest sent here from a guarded page lands back where
+        // they were going, not on the panel.
         return redirect()->intended(route('penova.workspace'));
     }
 }

@@ -47,8 +47,7 @@ test('platform lists no installed modules by default (D-026)', function () {
     loginWorkspaceAdmin();
 
     // Core enables no business module by default, so the platform view-model
-    // lists none. (The Store-enabled half lives in the Store lane —
-    // Feature/Store/ModuleCompositionTest.)
+    // lists none.
     $this->get(route('penova.workspace'))
         ->assertInertia(fn (Assert $page) => $page->where('platform.modules', []));
 });

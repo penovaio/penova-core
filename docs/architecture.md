@@ -1,7 +1,7 @@
 # Penova Core — Architecture
 
 Penova Core is a **Laravel product factory core**: the shared foundation
-that products (Store, CMS, …) are built on, so the 90%-repeated
+that products (CRM, CMS, …) are built on, so the 90%-repeated
 parts — auth, users, RBAC, settings, notifications, audit logs, UI
 components, data tables — are solved exactly once.
 
@@ -14,7 +14,7 @@ One deployable Laravel app, two layers:
 ```
 app/
   Core/          ← the factory: shared, product-agnostic modules
-  Modules/       ← the products: business-specific modules (Store ships as the reference module)
+  Modules/       ← the products: business-specific modules you add on top of Core
 ```
 
 ### The three rules
@@ -122,6 +122,6 @@ Module migrations live inside the module
    and components.
 3. Register the provider in `config/penova.php` → `modules`.
 
-`app/Modules/Store` is the reference implementation of this pattern —
-see `app/Modules/README.md` for its anatomy. Nothing in `app/Core`
-changes when a module is added.
+See `app/Modules/README.md` for the full module contract and a worked
+example of this pattern. Nothing in `app/Core` changes when a module is
+added.

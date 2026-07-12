@@ -80,8 +80,7 @@ test('the full Workspace experience works end to end', function () {
 test('Core ships with no business module enabled by default (D-026)', function () {
     // Core is complete on its own: the modules default is empty, so the
     // Workspace composition carries only Core contributions — no module menu
-    // items or widgets. (The Store-enabled half is in the Store lane —
-    // Feature/Store/ModuleCompositionTest.)
+    // items or widgets.
     expect(config('penova.modules'))->toBe([]);
 
     $this->seed(PenovaCoreSeeder::class);
@@ -93,8 +92,8 @@ test('Core ships with no business module enabled by default (D-026)', function (
     $this->get(route('penova.workspace'))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->where('menu', fn ($menu) => ! collect($menu)->contains('key', 'store'))
-            ->where('widgets', fn ($widgets) => ! collect($widgets)->contains('key', 'store-active-products')));
+            ->where('menu', fn ($menu) => ! collect($menu)->contains('key', 'blog'))
+            ->where('widgets', fn ($widgets) => ! collect($widgets)->contains('key', 'blog-recent-posts')));
 });
 
 test('login returns the guest to the originally-requested Workspace URL (generic intended redirect)', function () {

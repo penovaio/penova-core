@@ -13,9 +13,9 @@ use Illuminate\Support\ServiceProvider;
  * owns a frontend coordinate DISTINCT from the in-repo `@/Modules/{key}` default
  * and declares a separate frontend package pairing. It is package-shaped but
  * LOCAL: no publishing, no Composer/npm package, no file moves. It proves the
- * SAME generic generator/resolver path -- the one Store uses -- resolves a
- * provider-owned coordinate and enforces pairing/peers, with Core naming no
- * Module. Store-free by design (it is not the in-repo reference Module).
+ * SAME generic generator/resolver path Core uses for any Module -- resolving a
+ * provider-owned coordinate and enforcing pairing/peers, with Core naming no
+ * Module. It relies on no bundled module.
  */
 class AcmeCatalogServiceProvider extends ServiceProvider implements DeclaresFrontendPackage, DeclaresFrontendSource, PenovaModule
 {

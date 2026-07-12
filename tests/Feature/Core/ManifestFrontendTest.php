@@ -11,26 +11,26 @@ use App\Core\Support\Manifest;
  */
 
 test('a valid frontend section is declared and read back normalized', function () {
-    $m = Manifest::for('store', 'Store', 'Commerce', '1.0.0')->frontend([
+    $m = Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend([
         'widgets' => [
-            ['key' => 'store-active-products', 'entry' => 'widgets/ActiveProductsCard'],
+            ['key' => 'blog-recent-posts', 'entry' => 'widgets/RecentPostsCard'],
         ],
         'pages' => [
-            ['name' => 'Store/Products/Index', 'entry' => 'pages/Products/Index'],
+            ['name' => 'Blog/Posts/Index', 'entry' => 'pages/Posts/Index'],
         ],
     ]);
 
     // A frontend widget entry owns {key, entry} only — area/title/order stay the
     // backend widget descriptor's, joined by the globally-unique key.
     expect($m->frontendContributions())->toBe([
-        'widgets' => [['key' => 'store-active-products', 'entry' => 'widgets/ActiveProductsCard']],
-        'pages' => [['name' => 'Store/Products/Index', 'entry' => 'pages/Products/Index']],
+        'widgets' => [['key' => 'blog-recent-posts', 'entry' => 'widgets/RecentPostsCard']],
+        'pages' => [['name' => 'Blog/Posts/Index', 'entry' => 'pages/Posts/Index']],
     ]);
     expect($m->toArray())->toHaveKey('frontend');
 });
 
 test('missing sections default to empty and the Manifest stays immutable', function () {
-    $base = Manifest::for('store', 'Store', 'Commerce', '1.0.0');
+    $base = Manifest::for('blog', 'Blog', 'A sample module', '1.0.0');
     $withFrontend = $base->frontend(['widgets' => [['key' => 'w', 'entry' => 'widgets/W']]]);
 
     expect($withFrontend->frontendContributions())
@@ -40,30 +40,30 @@ test('missing sections default to empty and the Manifest stays immutable', funct
 });
 
 test('an unknown section is a malformed-descriptor failure', function () {
-    Manifest::for('store', 'Store', 'Commerce', '1.0.0')->frontend(['layouts' => []]);
+    Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['layouts' => []]);
 })->throws(InvalidArgumentException::class, 'malformed descriptor — unknown section [layouts]');
 
 test('a widget entry missing a required field is malformed', function () {
-    Manifest::for('store', 'Store', 'Commerce', '1.0.0')->frontend(['widgets' => [['key' => 'w']]]); // no entry
+    Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['widgets' => [['key' => 'w']]]); // no entry
 })->throws(InvalidArgumentException::class, 'field [entry] must be a non-empty string');
 
 test('a path-traversal entry token is rejected as malformed', function () {
-    Manifest::for('store', 'Store', 'Commerce', '1.0.0')->frontend(['pages' => [['name' => 'P', 'entry' => '../secrets/Index']]]);
+    Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['pages' => [['name' => 'P', 'entry' => '../secrets/Index']]]);
 })->throws(InvalidArgumentException::class, 'invalid entry token');
 
 test('a leading-slash entry token is rejected as malformed', function () {
-    Manifest::for('store', 'Store', 'Commerce', '1.0.0')->frontend(['widgets' => [['key' => 'w', 'entry' => '/widgets/W']]]);
+    Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['widgets' => [['key' => 'w', 'entry' => '/widgets/W']]]);
 })->throws(InvalidArgumentException::class, 'invalid entry token');
 
 test('a duplicate widget key is a duplicate-contribution failure', function () {
-    Manifest::for('store', 'Store', 'Commerce', '1.0.0')->frontend(['widgets' => [
+    Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['widgets' => [
         ['key' => 'dup', 'entry' => 'widgets/A'],
         ['key' => 'dup', 'entry' => 'widgets/B'],
     ]]);
 })->throws(InvalidArgumentException::class, 'duplicate contribution — [widgets] key [dup]');
 
 test('a duplicate page name is a duplicate-contribution failure', function () {
-    Manifest::for('store', 'Store', 'Commerce', '1.0.0')->frontend(['pages' => [
+    Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['pages' => [
         ['name' => 'Same', 'entry' => 'pages/A'],
         ['name' => 'Same', 'entry' => 'pages/B'],
     ]]);
