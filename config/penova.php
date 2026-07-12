@@ -17,7 +17,7 @@ return [
     'name' => env('PENOVA_NAME', 'Penova'),
 
     // Platform version, shown in the Workspace hero and What's New.
-    'version' => env('PENOVA_VERSION', '1.0.0'),
+    'version' => env('PENOVA_VERSION', '1.0.1'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,16 @@ return [
     ],
 
     'changelog' => [
+        [
+            'version' => '1.0.1',
+            'date' => '2026-07-12',
+            'highlights' => [
+                'Interactive project setup — php artisan penova:setup',
+                'MIT License',
+                'Bilingual README (English and Persian)',
+                'Configurable application timezone (APP_TIMEZONE)',
+            ],
+        ],
         [
             'version' => '1.0.0',
             'date' => '2026-07-12',

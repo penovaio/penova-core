@@ -7,6 +7,22 @@ misbehaves see [docs/guides/troubleshooting-core.md](docs/guides/troubleshooting
 Penova Core follows semantic versioning: breaking changes to the public contract
 land only on a MAJOR, always with a documented migration path.
 
+## [1.0.1] — 2026-07-12
+
+A first patch focused on the install experience and public-release housekeeping.
+No changes to the public contract.
+
+- **Interactive setup.** `composer create-project` now finishes with a short
+  guided setup (`php artisan penova:setup`) — interface language, fallback
+  language, timezone, starter profile (minimal / standard / full), database
+  driver, and an optional front-end build — then writes `.env`, migrates, and
+  seeds the Core baseline. It falls back to safe defaults in non-interactive
+  environments (CI, no TTY), so an automated install never blocks.
+- **Configurable timezone.** The application timezone is now driven by
+  `APP_TIMEZONE` (defaults to `UTC`).
+- **License.** Added the MIT License.
+- **Documentation.** The README is now bilingual (English, then Persian).
+
 ## [1.0.0] — 2026-07-12
 
 First stable release of Penova Core. The public surface below is now stable under
