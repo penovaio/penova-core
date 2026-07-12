@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Modules\{{ name }};
+
+use App\Core\Support\DeclaresFrontendSource;
+use App\Core\Support\Manifest;
+use App\Core\Support\PenovaModule;
+use Illuminate\Contracts\Foundation\CachesRoutes;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+
+/**
+ * {{ name }} — <one line: what this module does>.
+ *
+ * Scaffolded by `php artisan penova:module {{ name }}` with a working
+ * Index/Create/Store CRUD for the {{ entity }} model. A module declares
+ * everything it contributes through ONE Manifest (see manifest() below);
+ * routes and migrations are ordinary provider mechanics in boot(), NOT
+ * Manifest contributions. Start from app/Modules/README.md.
+ *
+ * Frontend lives in resources/js/Modules/{{ name }}/ and resolves through the
+ * EXPERIMENTAL module-frontend registry (RFC-006 / D-028), not an auto-glob:
+ *   Pages/   → each page is declared in the Manifest `frontend` section and
+ *              resolves against this Module's own coordinate (frontendSource());
+ *              a build runs `php artisan penova:frontend-registry` first.
+ *   Widgets/ → a widget's Vue entry is declared in `frontend`, joined to its
+ *              backend descriptor by `key` (see app/Modules/README.md).
+ */
+class {{ name }}ServiceProvider extends ServiceProvider implements DeclaresFrontendSource, PenovaModule
+{
+    public function register(): void
+    {
+        // Container bindings the module needs (usually none to start).
+    }
+
+    public function boot(): void
+    {
+        // Module routes live in routes.php as plain definitions; the panel
+        // group (URI prefix + auth middleware) is applied here. Cache guard
+        // mirrors loadRoutesFrom() so route:cache stays safe.
+        if (! ($this->app instanceof CachesRoutes && $this->app->routesAreCached())) {
+            Route::middleware(config('penova.workspace.middleware'))
+                ->prefix(config('penova.workspace.prefix'))
+                ->group(__DIR__.'/routes.php');
+        }
+
+        $this->loadMigrationsFrom(__DIR__.'/Database/Migrations');
+    }
+
+    /**
+     * The module's single Manifest — its complete declaration of what it
+     * contributes to the Platform: identity, menu, widgets, permissions.
+     *
+     * NOTE: the menu item stays HIDDEN until the '{{ module }}.view'
+     * permission is seeded and granted — register {{ name }}PermissionsSeeder
+     * (Database/Seeders) in database/seeders/DatabaseSeeder.php and run
+     * `php artisan db:seed`. Icon keys map in
+     * resources/js/Core/Layouts/WorkspaceLayout.vue
+     * (home|users|shield|cog|clock|bell|calendar|sparkles|squares).
+     */
+    public static function manifest(): Manifest
+    {
+        return Manifest::for(
+            key: '{{ module }}',
+            name: '{{ name }}',
+            description: 'TODO: describe the {{ name }} module.',
+            version: '0.1.0',
+        )
+            ->menu([
+                [
+                    'key' => '{{ module }}',
+                    'label' => '{{ name }}', // TODO: replace with the Persian label
+                    'route' => '{{ module }}.index',
+                    'icon' => 'squares',
+                    'order' => 500,
+                    'permission' => '{{ module }}.view',
+                ],
+            ])
+            // Every Module page Core renders MUST be declared here as a typed
+            // {name, entry} pair (EXPERIMENTAL frontend seam — RFC-006 / D-028); the
+            // entry resolves against this Module's coordinate (frontendSource()
+            // below). To add a widget: declare its descriptor in ->widgets([...])
+            // AND a paired {key, entry} under 'widgets' here — see app/Modules/README.md.
+            ->frontend([
+                'pages' => [
+                    ['name' => 'Modules/{{ name }}/Index', 'entry' => 'Pages/Index'],
+                    ['name' => 'Modules/{{ name }}/Create', 'entry' => 'Pages/Create'],
+                ],
+            ])
+            ->permissions([
+                '{{ module }}.view',
+                '{{ module }}.manage',
+            ]);
+    }
+
+    /**
+     * This Module's OWN frontend coordinate root (EXPERIMENTAL — RFC-006 / D-028):
+     * where its Vue frontend lives. Declared explicitly because the Module key
+     * ('{{ module }}', kebab-case) differs from the frontend directory
+     * ('{{ name }}', StudlyCase) — the default key-based coordinate would not
+     * resolve on a case-sensitive filesystem. Module-owned build metadata, never a
+     * Manifest field.
+     */
+    public static function frontendSource(): string
+    {
+        return '@/Modules/{{ name }}';
+    }
+}

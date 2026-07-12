@@ -1,0 +1,36 @@
+<?php
+
+use App\Modules\{{ name }}\Controllers\{{ name }}CreateController;
+use App\Modules\{{ name }}\Controllers\{{ name }}IndexController;
+use App\Modules\{{ name }}\Controllers\{{ name }}StoreController;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Modules\{{ name }} Routes
+|--------------------------------------------------------------------------
+| Plain route definitions only — {{ name }}ServiceProvider::boot() loads
+| this file inside the Workspace group (URI prefix + auth middleware
+| from config('penova.workspace')), so URIs land under the configured
+| Workspace prefix, e.g. /workspace/{{ slug }}/... .
+| Route names carry the module's own "{{ module }}." prefix explicitly;
+| "penova.*" names are reserved for Core.
+|
+| One INVOKABLE controller per action (see app/Modules/README.md).
+| Register static paths (e.g. /{{ slug }}/today-count) BEFORE
+| parameterised ones (/{{ slug }}/{model}) so they are never captured
+| by route-model binding.
+|
+| Permissions (seeded by {{ name }}PermissionsSeeder):
+|   {{ module }}.view   → read-only pages + widget data endpoints
+|   {{ module }}.manage → create / store / edit / update
+*/
+
+Route::middleware('permission:{{ module }}.view')->group(function () {
+    Route::get('/{{ slug }}', {{ name }}IndexController::class)->name('{{ module }}.index');
+});
+
+Route::middleware('permission:{{ module }}.manage')->group(function () {
+    Route::get('/{{ slug }}/create', {{ name }}CreateController::class)->name('{{ module }}.create');
+    Route::post('/{{ slug }}', {{ name }}StoreController::class)->name('{{ module }}.store');
+});

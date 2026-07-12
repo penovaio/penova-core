@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+/*
+|--------------------------------------------------------------------------
+| Yekan Bakh (FaNum) — the Persian presentation typeface
+|--------------------------------------------------------------------------
+| Served from public/fonts/Yekan-Bakh. The FaNum cut renders Persian
+| numerals. It is applied ONLY under the Persian locale (see the
+| html[lang="fa"] rule below), never as a global default — Core's default
+| presentation is locale-neutral (RFC-005 / D-027).
+*/
+@font-face {
+    font-family: 'Yekan Bakh';
+    src: url('/fonts/Yekan-Bakh/Yekan-Bakh-FaNum-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Yekan Bakh';
+    src: url('/fonts/Yekan-Bakh/Yekan-Bakh-FaNum-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Yekan Bakh';
+    src: url('/fonts/Yekan-Bakh/Yekan-Bakh-FaNum-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Design tokens (Tailwind 4 @theme)
+|--------------------------------------------------------------------------
+| --font-sans: the locale-neutral base font (font-sans), Latin numerals.
+|   This is the default for every locale; the Persian face is layered on
+|   top only under html[lang="fa"] (RFC-005 / D-027).
+| --font-yekan: explicit Persian (Yekan Bakh) alias, usable as `font-yekan`.
+| --color-brand: the Penova red — generates bg-brand, text-brand,
+|   ring-brand, … `brand-hover` is the pressed/hover shade.
+*/
+@theme {
+    --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-yekan: 'Yekan Bakh', ui-sans-serif, system-ui, sans-serif;
+
+    --color-brand: #ff4431;
+    --color-brand-hover: #e63a29;
+
+    /* Secondary accent — blue */
+    --color-accent: #2596be;
+    --color-accent-hover: #1f80a3;
+    --color-accent-light: #7cc3dd;
+
+    /* Warm neutral scale (sand): off-white → near-black. Named "sand" to
+       avoid colliding with Tailwind's built-in "stone". */
+    --color-sand-50: #fbfaf9;
+    --color-sand-100: #f1ede8;
+    --color-sand-200: #efeae4;
+    --color-sand-300: #e7e2dc;
+    --color-sand-400: #d6d0c9;
+    --color-sand-500: #a9a29b;
+    --color-sand-600: #78716c;
+    --color-sand-700: #57534e;
+    --color-sand-800: #44403c;
+    --color-sand-900: #1c1917;
+}
+
+/*
+| Persian presentation layer (RFC-005 / D-027) — the Yekan Bakh (FaNum)
+| face applies ONLY when the active locale is Persian. The <html lang>
+| attribute is locale-driven (resources/views/app.blade.php), so any non-fa
+| install keeps the neutral base font and Latin numerals. Written unlayered
+| so it wins over the `font-sans` utility on <body> regardless of Tailwind's
+| layer order; presentation only — no number/date formatting machinery.
+*/
+html[lang="fa"] body {
+    font-family: var(--font-yekan);
+}
+
+/*
+| Direction baseline — the <html> element's dir follows the active locale
+| (resources/views/app.blade.php): rtl for Persian, ltr by default. Flex/grid
+| and logical utilities (ms-*, me-*, start-*, end-*, text-start) follow that
+| attribute automatically, so no locale hardcodes a direction here.
+*/
+@layer base {
+    body {
+        text-align: start;
+    }
+
+    /* Text-entry controls already show a single brand-colored focus ring
+       (focus:ring-brand, a box-shadow); suppress the browser's native
+       outline so it doesn't double up with a second, slate-ish border.
+       Checkboxes/radios are excluded — they carry no ring, so the native
+       outline is their only focus indicator (keyboard a11y, WCAG 2.4.7). */
+    input:not([type='checkbox']):not([type='radio']):focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+    }
+}
