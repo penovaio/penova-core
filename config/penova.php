@@ -17,7 +17,7 @@ return [
     'name' => env('PENOVA_NAME', 'Penova'),
 
     // Platform version, shown in the Workspace hero and What's New.
-    'version' => env('PENOVA_VERSION', '1.0.1'),
+    'version' => env('PENOVA_VERSION', '1.0.2'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,15 @@ return [
     ],
 
     'changelog' => [
+        [
+            'version' => '1.0.2',
+            'date' => '2026-07-12',
+            'highlights' => [
+                'Portable setup prompts (Windows, macOS, Linux)',
+                'ASCII-only installer output',
+                'Cleaner install with no autoload warnings',
+            ],
+        ],
         [
             'version' => '1.0.1',
             'date' => '2026-07-12',

@@ -7,6 +7,18 @@ misbehaves see [docs/guides/troubleshooting-core.md](docs/guides/troubleshooting
 Penova Core follows semantic versioning: breaking changes to the public contract
 land only on a MAJOR, always with a documented migration path.
 
+## [1.0.2] — 2026-07-12
+
+A patch focused on the install experience. No changes to the public contract.
+
+- **Portable setup prompts.** `php artisan penova:setup` now uses the framework's
+  built-in question helpers, so the language, timezone, starter profile and
+  database choices work the same on Windows, macOS and Linux. Its output is
+  ASCII-only. When the environment is non-interactive it applies safe defaults
+  and points to `php artisan penova:setup` for later customization.
+- **Quieter install.** Moved the inline test fixtures into their own files, so
+  `composer create-project` no longer prints PSR-4 autoload warnings.
+
 ## [1.0.1] — 2026-07-12
 
 A first patch focused on the install experience and public-release housekeeping.
