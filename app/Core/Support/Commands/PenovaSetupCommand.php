@@ -79,11 +79,20 @@ class PenovaSetupCommand extends Command
 
         $this->newLine();
         $this->components->info(sprintf(
-            'Setup complete. Run "php artisan serve", then sign in at /%s with %s (password: %s).',
+            'Your project is ready. Start it with "php artisan serve", then sign in at /%s with %s (password: %s).',
             config('penova.workspace.prefix'),
             config('penova.operator.email'),
             config('penova.operator.password'),
         ));
+
+        if (! $interactive) {
+            // Composer runs create-project scripts without an interactive
+            // terminal (there is no TTY on Windows), so the questions above were
+            // skipped and safe defaults applied. Point the user at the
+            // interactive command they can run themselves.
+            $this->line('  Defaults were applied without prompts. To choose the interface language,');
+            $this->line('  timezone, starter profile or database, run: php artisan penova:setup');
+        }
 
         return self::SUCCESS;
     }
@@ -116,7 +125,7 @@ class PenovaSetupCommand extends Command
             ];
         }
 
-        $build = $this->confirm('Install and build the front-end now (requires npm)?', false);
+        $build = $this->confirm('Install and build the front-end now (requires npm)?', true);
 
         return compact('locale', 'fallback', 'timezone', 'profile', 'driver', 'db', 'build');
     }
@@ -130,7 +139,6 @@ class PenovaSetupCommand extends Command
     private function useDefaults(): array
     {
         $this->components->info('Non-interactive run - applying safe defaults (English, UTC, standard profile, SQLite).');
-        $this->line('  To choose the language, timezone, database or profile, run: php artisan penova:setup');
         $this->newLine();
 
         return [
@@ -140,7 +148,7 @@ class PenovaSetupCommand extends Command
             'profile' => 'standard',
             'driver' => 'sqlite',
             'db' => [],
-            'build' => false,
+            'build' => true,
         ];
     }
 
@@ -334,32 +342,34 @@ class PenovaSetupCommand extends Command
     /** Install and build the front-end assets, tolerating a missing toolchain. */
     private function buildAssets(): void
     {
-        $this->runProcess(['npm', 'install'], 'Installing front-end packages...');
-        $this->runProcess(['npm', 'run', 'build'], 'Building front-end assets...');
+        // Run npm through the shell so the right executable is found on every
+        // platform (npm.cmd on Windows, npm elsewhere).
+        $this->runProcess(Process::fromShellCommandline('npm install', base_path()), 'Installing front-end packages...', 'npm install');
+        $this->runProcess(Process::fromShellCommandline('npm run build', base_path()), 'Building front-end assets...', 'npm run build');
     }
 
     /** Run an artisan subcommand in a fresh process (fresh application boot). */
     private function runArtisan(array $arguments, string $message): void
     {
-        $this->runProcess(array_merge([PHP_BINARY, base_path('artisan')], $arguments), $message);
+        $command = array_merge([PHP_BINARY, base_path('artisan')], $arguments);
+        $this->runProcess(new Process($command, base_path()), $message, implode(' ', $arguments));
     }
 
     /** Run an external process; a failure is reported, not fatal. */
-    private function runProcess(array $command, string $message): void
+    private function runProcess(Process $process, string $message, string $label): void
     {
         $this->line('  '.$message);
 
-        $process = new Process($command, base_path());
-        $process->setTimeout(600);
+        $process->setTimeout(900);
 
         try {
             $process->run();
 
             if (! $process->isSuccessful()) {
-                $this->components->warn('Step could not be completed automatically: '.implode(' ', $command));
+                $this->components->warn("Could not complete '{$label}' automatically - you can run it by hand later.");
             }
         } catch (Throwable) {
-            $this->components->warn('Step could not be completed automatically: '.implode(' ', $command));
+            $this->components->warn("Could not complete '{$label}' automatically - you can run it by hand later.");
         }
     }
 }

@@ -1,4 +1,4 @@
-# Penova Core — Getting Started
+# Penova Core - Getting Started
 
 Penova Core is a Laravel application you install with Composer (or clone directly).
 
@@ -6,16 +6,19 @@ Penova Core is a Laravel application you install with Composer (or clone directl
 
 ```bash
 composer create-project penovaio/core my-app && cd my-app
-php artisan penova:install    # migrate + seed the Operator account
-npm install && npm run build
 php artisan serve
 ```
 
-`create-project` installs dependencies and, via its post-install scripts, creates
-`.env`, generates the app key, and runs the initial migration; `penova:install`
-then seeds the Operator account. By default this uses **SQLite** — no database
-setup needed. (Prefer MySQL? Set `DB_CONNECTION=mysql` and the `DB_*` values in
-`.env` before `penova:install`; see `guides/troubleshooting-core.md`.)
+`create-project` installs dependencies and then runs `penova:setup`, which
+creates `.env`, generates the app key, migrates and seeds the Operator account,
+and installs and builds the front-end. When it finishes the project is ready, so
+`php artisan serve` is the only step left. By default it uses **SQLite** - no
+database setup needed. Run it in a terminal and it also asks a few questions
+(interface language, timezone, starter profile, database driver); in a
+non-interactive environment it uses safe defaults, and you can re-run
+`php artisan penova:setup` at any time to change them. (Prefer MySQL? Choose it
+during setup, or set `DB_CONNECTION=mysql` and the `DB_*` values in `.env`; see
+`guides/troubleshooting-core.md`.)
 
 ## Setup from a clone (alternative)
 
@@ -32,7 +35,7 @@ composer run dev    # serves the app + queue + logs + Vite
 
 > **Front-end build.** `npm run build`, `npm run dev`, and `composer run dev` all
 > regenerate the module-frontend registry (`php artisan penova:frontend-registry`)
-> before Vite runs. Build the front-end through these scripts — a bare `vite build`
+> before Vite runs. Build the front-end through these scripts - a bare `vite build`
 > fails because the generated registry is git-ignored and absent on a fresh
 > checkout (see `app/Modules/README.md`).
 
@@ -60,7 +63,7 @@ must always be green.
 > **Dev/test only.** These credentials exist so a fresh checkout is usable
 > immediately. In any real environment, change the email/password right
 > after the first login (or seed real credentials via environment-specific
-> seeders) — never ship the defaults.
+> seeders) - never ship the defaults.
 
 The defaults can be overridden per environment before seeding:
 
@@ -72,7 +75,7 @@ PENOVA_OPERATOR_PASSWORD=a-strong-generated-secret
 The seeder reads `config('penova.operator.email')` / `config('penova.operator.password')`,
 so no code changes are needed to seed real credentials. The legacy
 `PENOVA_ADMIN_EMAIL` / `PENOVA_ADMIN_PASSWORD` variables are still honoured as a
-one-cycle fallback and will be removed at the next MAJOR — prefer the
+one-cycle fallback and will be removed at the next MAJOR - prefer the
 `PENOVA_OPERATOR_*` names.
 
 ## Auth flow
@@ -96,7 +99,7 @@ PENOVA_REGISTRATION=true
 ```
 
 This registers the `/register` routes and shows the "Register" link on the
-login page. The toggle is evaluated when routes load — if you cache routes
+login page. The toggle is evaluated when routes load - if you cache routes
 in production (`php artisan route:cache`), rebuild the cache after
 changing it.
 
