@@ -197,7 +197,9 @@ Pages مربوط به Store / SMS / Payment در resources/js/Modules/* قرار
 
 ## لایسنس (License)
 
-نوع لایسنس پروژه (MIT، اختصاصی، یا هر چه که انتخاب می‌کنید) را اینجا بنویسید.
+Penova Core تحت لایسنس **MIT** منتشر می‌شود؛ متن کامل در فایل [LICENSE](LICENSE).
+
+Released under the **MIT License** — see [LICENSE](LICENSE).
 
 ## مشارکت (Contributing)
 
