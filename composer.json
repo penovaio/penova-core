@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "penovaio/core",
     "type": "project",
-    "description": "Penova Core - Laravel product factory core (modular monolith: Core + Modules).",
+    "description": "Penova Core is the Laravel foundation for building modular monolith products with a Core + Modules architecture.",
     "keywords": ["laravel", "penova", "modular-monolith"],
     "license": "MIT",
     "require": {
