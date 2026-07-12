@@ -7,6 +7,19 @@ misbehaves see [docs/guides/troubleshooting-core.md](docs/guides/troubleshooting
 Penova Core follows semantic versioning: breaking changes to the public contract
 land only on a MAJOR, always with a documented migration path.
 
+## [1.0.4] - 2026-07-12
+
+A patch that smooths out installation. No changes to the public contract.
+
+- **Faster install.** The optimized autoloader is no longer forced during
+  installation, so `composer create-project` finishes noticeably faster - it
+  builds the full classmap (thousands of classes) only when you ask for it.
+  Optimize for production the usual way: `composer install --optimize-autoloader`.
+- **No half-shown prompt.** The post-install setup now runs non-interactively,
+  because Composer runs it without a usable terminal. It applies safe defaults,
+  migrates, seeds and builds, then points you to `php artisan penova:setup` -
+  which asks the questions interactively when you run it yourself.
+
 ## [1.0.3] - 2026-07-12
 
 A patch that makes the install a single command. No changes to the public contract.

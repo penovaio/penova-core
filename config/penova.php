@@ -17,7 +17,7 @@ return [
     'name' => env('PENOVA_NAME', 'Penova'),
 
     // Platform version, shown in the Workspace hero and What's New.
-    'version' => env('PENOVA_VERSION', '1.0.3'),
+    'version' => env('PENOVA_VERSION', '1.0.4'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,14 @@ return [
     ],
 
     'changelog' => [
+        [
+            'version' => '1.0.4',
+            'date' => '2026-07-12',
+            'highlights' => [
+                'Faster install - optimized autoloader no longer forced',
+                'Post-install setup runs non-interactively (no half-shown prompt)',
+            ],
+        ],
         [
             'version' => '1.0.3',
             'date' => '2026-07-12',
