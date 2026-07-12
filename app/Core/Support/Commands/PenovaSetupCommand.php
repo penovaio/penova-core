@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use Throwable;
 
-use function Laravel\Prompts\confirm;
-use function Laravel\Prompts\intro;
-use function Laravel\Prompts\note;
-use function Laravel\Prompts\outro;
-use function Laravel\Prompts\select;
-use function Laravel\Prompts\spin;
-use function Laravel\Prompts\text;
-
 /**
  * Interactive first-time setup for a fresh Penova Core project.
  *
@@ -23,14 +15,17 @@ use function Laravel\Prompts\text;
  *   php artisan penova:setup --defaults # accept safe defaults, no prompts
  *
  * Runs automatically after `composer create-project` (see the
- * post-create-project-cmd script). It gathers a handful of choices —
+ * post-create-project-cmd script). It gathers a handful of choices --
  * interface language, fallback language, timezone, starter profile, database
- * driver, and whether to build the front-end — writes them to `.env`, refreshes
+ * driver, and whether to build the front-end -- writes them to `.env`, refreshes
  * the runtime configuration, then generates the app key, prepares the database,
  * runs the migrations and seeds the Core baseline.
  *
- * In a non-interactive environment (CI, no TTY, or --no-interaction) it skips
- * every prompt and uses the safe defaults, so an automated install never blocks.
+ * The prompts use the framework's built-in question helpers so they behave the
+ * same on Windows, macOS and Linux. In a non-interactive environment (CI, no
+ * TTY, or --defaults) every prompt is skipped in favour of the safe defaults, so
+ * an automated install never blocks; the user can re-run this command in a real
+ * terminal at any time to change the choices.
  */
 class PenovaSetupCommand extends Command
 {
@@ -39,33 +34,34 @@ class PenovaSetupCommand extends Command
 
     protected $description = 'Interactive first-time setup for a fresh Penova Core project';
 
-    /** Interface / fallback language choices. */
-    private const LANGUAGES = [
-        'en' => 'English',
-        'fa' => 'فارسی (Persian)',
+    /** Interface / fallback language options (values written to APP_LOCALE). */
+    private const LANGUAGES = ['en', 'fa'];
+
+    /** A short, common timezone shortlist. */
+    private const TIMEZONES = [
+        'UTC',
+        'Asia/Tehran',
+        'Asia/Dubai',
+        'Europe/London',
+        'Europe/Berlin',
+        'America/New_York',
     ];
 
-    /** A short, common timezone shortlist; any IANA name is accepted via prompt. */
-    private const TIMEZONES = [
-        'UTC' => 'UTC',
-        'Asia/Tehran' => 'Asia/Tehran',
-        'Asia/Dubai' => 'Asia/Dubai',
-        'Europe/London' => 'Europe/London',
-        'Europe/Berlin' => 'Europe/Berlin',
-        'America/New_York' => 'America/New_York',
-    ];
+    /** Starter profiles, from lightest to fullest. */
+    private const PROFILES = ['minimal', 'standard', 'full'];
+
+    /** Supported database drivers. */
+    private const DRIVERS = ['sqlite', 'mysql', 'pgsql'];
 
     public function handle(): int
     {
-        intro('Penova Core — project setup');
+        $this->newLine();
+        $this->line('  <fg=cyan;options=bold>Penova Core</> - project setup');
+        $this->newLine();
 
         $interactive = $this->input->isInteractive() && ! $this->option('defaults');
 
-        if (! $interactive) {
-            note('Non-interactive run — applying safe defaults.');
-        }
-
-        $answers = $interactive ? $this->collectAnswers() : $this->defaults();
+        $answers = $interactive ? $this->collectAnswers() : $this->useDefaults();
 
         $this->applyEnvironment($answers);
         $this->prepareApplicationKey();
@@ -81,8 +77,9 @@ class PenovaSetupCommand extends Command
             $this->buildAssets();
         }
 
-        outro(sprintf(
-            'Setup complete. Run `php artisan serve`, then sign in at /%s with %s (password: %s).',
+        $this->newLine();
+        $this->components->info(sprintf(
+            'Setup complete. Run "php artisan serve", then sign in at /%s with %s (password: %s).',
             config('penova.workspace.prefix'),
             config('penova.operator.email'),
             config('penova.operator.password'),
@@ -92,40 +89,34 @@ class PenovaSetupCommand extends Command
     }
 
     /**
-     * Ask the interactive questions.
+     * Ask the interactive questions using the portable question helpers.
      *
      * @return array{locale:string,fallback:string,timezone:string,profile:string,driver:string,db:array<string,string>,build:bool}
      */
     private function collectAnswers(): array
     {
-        $locale = select('Interface language', self::LANGUAGES, default: 'en');
-        $fallback = select('Fallback language', self::LANGUAGES, default: 'en');
-        $timezone = select('Timezone', self::TIMEZONES, default: 'UTC');
-
-        $profile = select('Starter profile', [
-            'minimal' => 'Minimal — Core, migrated and seeded (Operator account)',
-            'standard' => 'Standard — Minimal + default branding settings',
-            'full' => 'Full — Standard + the Store reference module (demo)',
-        ], default: 'standard');
-
-        $driver = select('Database driver', [
-            'sqlite' => 'SQLite — zero configuration, great for getting started',
-            'mysql' => 'MySQL / MariaDB',
-            'pgsql' => 'PostgreSQL',
-        ], default: 'sqlite');
+        $locale = $this->choice('Interface language (en = English, fa = Persian)', self::LANGUAGES, 0);
+        $fallback = $this->choice('Fallback language (en = English, fa = Persian)', self::LANGUAGES, 0);
+        $timezone = $this->choice('Timezone', self::TIMEZONES, 0);
+        $profile = $this->choice(
+            'Starter profile (minimal = Core only, standard = + branding, full = + Store demo)',
+            self::PROFILES,
+            1,
+        );
+        $driver = $this->choice('Database driver', self::DRIVERS, 0);
 
         $db = [];
         if ($driver !== 'sqlite') {
             $db = [
-                'DB_HOST' => text('Database host', default: '127.0.0.1', required: true),
-                'DB_PORT' => text('Database port', default: $driver === 'pgsql' ? '5432' : '3306', required: true),
-                'DB_DATABASE' => text('Database name', default: 'penova', required: true),
-                'DB_USERNAME' => text('Database username', default: $driver === 'pgsql' ? 'postgres' : 'root', required: true),
-                'DB_PASSWORD' => text('Database password (leave blank if none)'),
+                'DB_HOST' => (string) $this->ask('Database host', '127.0.0.1'),
+                'DB_PORT' => (string) $this->ask('Database port', $driver === 'pgsql' ? '5432' : '3306'),
+                'DB_DATABASE' => (string) $this->ask('Database name', 'penova'),
+                'DB_USERNAME' => (string) $this->ask('Database username', $driver === 'pgsql' ? 'postgres' : 'root'),
+                'DB_PASSWORD' => (string) $this->secret('Database password (leave blank if none)', true),
             ];
         }
 
-        $build = confirm('Install and build the front-end now (npm)?', default: false);
+        $build = $this->confirm('Install and build the front-end now (requires npm)?', false);
 
         return compact('locale', 'fallback', 'timezone', 'profile', 'driver', 'db', 'build');
     }
@@ -136,8 +127,12 @@ class PenovaSetupCommand extends Command
      *
      * @return array{locale:string,fallback:string,timezone:string,profile:string,driver:string,db:array<string,string>,build:bool}
      */
-    private function defaults(): array
+    private function useDefaults(): array
     {
+        $this->components->info('Non-interactive run - applying safe defaults (English, UTC, standard profile, SQLite).');
+        $this->line('  To choose the language, timezone, database or profile, run: php artisan penova:setup');
+        $this->newLine();
+
         return [
             'locale' => 'en',
             'fallback' => 'en',
@@ -165,7 +160,8 @@ class PenovaSetupCommand extends Command
             'DB_CONNECTION' => $answers['driver'],
         ], $answers['db']);
 
-        spin(fn () => $this->writeEnv($values), 'Writing configuration to .env…');
+        $this->line('  Writing configuration to .env...');
+        $this->writeEnv($values);
 
         // The framework booted with the previous .env, so env()/config() are
         // frozen. Refresh the values this command still relies on (locale and
@@ -218,7 +214,7 @@ class PenovaSetupCommand extends Command
         File::put($path, $contents);
     }
 
-    /** Quote a value that contains whitespace or a leading/trailing hash. */
+    /** Quote a value that contains whitespace or a hash. */
     private function escapeEnvValue(string $value): string
     {
         if ($value === '') {
@@ -255,16 +251,17 @@ class PenovaSetupCommand extends Command
     private function migrateAndSeed(): bool
     {
         try {
-            $migrated = spin(fn () => $this->callSilent('migrate', ['--force' => true]), 'Running migrations…');
+            $this->line('  Running migrations...');
 
-            if ($migrated !== self::SUCCESS) {
+            if ($this->callSilent('migrate', ['--force' => true]) !== self::SUCCESS) {
                 throw new \RuntimeException('The migration step reported an error.');
             }
 
-            spin(fn () => $this->callSilent('db:seed', ['--force' => true]), 'Seeding the Core baseline…');
+            $this->line('  Seeding the Core baseline...');
+            $this->callSilent('db:seed', ['--force' => true]);
         } catch (Throwable $e) {
-            note('Could not set up the database. Check your database settings in .env, then run: php artisan penova:install');
-            $this->components->error($e->getMessage());
+            $this->components->error('Could not set up the database. Check your database settings in .env, then run: php artisan penova:install');
+            $this->line('  '.$e->getMessage());
 
             return false;
         }
@@ -327,18 +324,18 @@ class PenovaSetupCommand extends Command
 
         // A separate process boots with Store enabled, so its migrations
         // register and only they run (the Core tables already exist).
-        $this->runArtisan(['migrate', '--force'], 'Migrating the Store module…');
+        $this->runArtisan(['migrate', '--force'], 'Migrating the Store module...');
         $this->runArtisan(
             ['db:seed', '--class=App\\Modules\\Store\\Database\\Seeders\\StorePermissionsSeeder', '--force'],
-            'Seeding Store permissions…',
+            'Seeding Store permissions...',
         );
     }
 
     /** Install and build the front-end assets, tolerating a missing toolchain. */
     private function buildAssets(): void
     {
-        $this->runProcess(['npm', 'install'], 'Installing front-end packages…');
-        $this->runProcess(['npm', 'run', 'build'], 'Building front-end assets…');
+        $this->runProcess(['npm', 'install'], 'Installing front-end packages...');
+        $this->runProcess(['npm', 'run', 'build'], 'Building front-end assets...');
     }
 
     /** Run an artisan subcommand in a fresh process (fresh application boot). */
@@ -347,20 +344,22 @@ class PenovaSetupCommand extends Command
         $this->runProcess(array_merge([PHP_BINARY, base_path('artisan')], $arguments), $message);
     }
 
-    /** Run an external process under a spinner; a failure is reported, not fatal. */
+    /** Run an external process; a failure is reported, not fatal. */
     private function runProcess(array $command, string $message): void
     {
+        $this->line('  '.$message);
+
         $process = new Process($command, base_path());
         $process->setTimeout(600);
 
         try {
-            spin(fn () => $process->run(), $message);
+            $process->run();
 
             if (! $process->isSuccessful()) {
-                note('Step could not be completed automatically: '.implode(' ', $command));
+                $this->components->warn('Step could not be completed automatically: '.implode(' ', $command));
             }
         } catch (Throwable) {
-            note('Step could not be completed automatically: '.implode(' ', $command));
+            $this->components->warn('Step could not be completed automatically: '.implode(' ', $command));
         }
     }
 }
