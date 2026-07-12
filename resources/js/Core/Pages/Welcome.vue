@@ -85,7 +85,7 @@ const modules = ['commerce', 'messaging', 'payments'];
                 <!-- Install snippet -->
                 <div class="mx-auto mt-8 max-w-md rounded-lg bg-sand-900 px-4 py-3 text-start font-mono text-sm" dir="ltr">
                     <span class="text-accent">$</span>
-                    <span class="text-sand-300"> php artisan penova:install</span>
+                    <span class="text-sand-300"> php artisan penova:setup</span>
                 </div>
             </section>
 
