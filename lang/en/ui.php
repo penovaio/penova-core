@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Core UI messages — English base catalog (RFC-005 / D-027)
+| Core UI messages - English base catalog (RFC-005 / D-027)
 |--------------------------------------------------------------------------
 | The base and fallback language. Keys are English-shaped and stable; a
 | locale catalog (e.g. lang/fa/ui.php) overrides values, and any key missing
@@ -51,7 +51,7 @@ return [
 
     'shell' => [
         'workspace_subtitle' => 'Your product workspace',
-        'tagline' => 'Laravel Product Factory',
+        'tagline' => 'The shared foundation for modular Laravel products.',
         'guest_footer' => 'A product core, built on Laravel',
     ],
 
@@ -80,7 +80,7 @@ return [
         'confirm_delete' => 'Delete user “:name”?',
         'create_title' => 'New user',
         'edit_title' => 'Edit user',
-        'edit_document_title' => 'Edit user — :name',
+        'edit_document_title' => 'Edit user - :name',
         'password' => 'Password',
         'password_confirm' => 'Confirm password',
         'password_new' => 'New password (leave blank to keep current)',
@@ -134,7 +134,7 @@ return [
 
     // Guest-auth presentation only (login, register, password reset). Auth
     // behavior, route names, and the server-provided `status` message are not
-    // here — they are owned by the auth flow, not this catalog (D-017).
+    // here - they are owned by the auth flow, not this catalog (D-017).
     'auth' => [
         'sign_in' => 'Sign in',
         'login_document_title' => 'Sign in to the workspace',
@@ -155,7 +155,7 @@ return [
         'reset_submit' => 'Save password',
     ],
 
-    // Workspace home (post-install onboarding) — Core-owned presentation only.
+    // Workspace home (post-install onboarding) - Core-owned presentation only.
     // Onboarding steps, guidance, module names, health rows and overview values
     // come from the backend `platform` view-model and stay as data.
     'home' => [
@@ -217,32 +217,53 @@ return [
         'roles_subtitle' => 'Defined roles',
         'no_activity' => 'No activity recorded yet.',
         'no_notifications' => 'You have no new notifications.',
-        'modules_body' => 'Penova business capabilities are added as <strong>Modules</strong> (e.g. Store, Booking, CRM, CMS, …). Each module registers its widgets with a simple descriptor from its own service provider and appears in this grid — without touching Core.',
+        'modules_body' => 'Penova business capabilities are added as <strong>Modules</strong> (e.g. Booking, CRM, CMS, …). Each module registers its widgets with a simple descriptor from its own service provider and appears in this grid, without touching Core.',
     ],
 
     // Public landing page at "/" (RFC-005 / D-027 / D-AUDIT-006). Rendered in the
-    // active locale via useI18n — English base, Persian when APP_LOCALE=fa — so the
-    // page is locale-neutral, not Persian-hardcoded. 'Laravel Product Factory' (the
-    // positioning tagline) and command snippets stay language-neutral by design.
+    // active locale via useI18n - English base, Persian when APP_LOCALE=fa - so the
+    // page is locale-neutral, not Persian-hardcoded. Only command snippets and
+    // proper nouns stay language-neutral / LTR.
     'welcome' => [
-        'hero_intro' => 'A production-ready core for your Laravel products — authentication, users and roles, settings, notifications and a clean Workspace, ready to host your product modules.',
-        'cta_workspace' => 'Go to the Workspace',
-        'cta_docs' => 'View documentation',
-        'features_heading' => 'What you get with Penova Core',
-        'modules_heading' => 'Plug-in modules when you’re ready',
-        'modules_intro' => 'Penova Core ships as a free foundation. Whenever you need a real product, you add product modules on top of this core — without rewriting everything.',
-        'coming_soon' => 'Coming soon',
-        'footer_docs' => 'Documentation',
+        // Hero
+        'hero_intro' => 'Penova Core provides the shared infrastructure for modular Laravel products. Authentication, access control, settings, notifications, and a unified Workspace are part of the core, allowing every module to build on a consistent foundation.',
+        'cta_workspace' => 'Open Workspace',
+        'cta_github' => 'View on GitHub',
+
+        // Get started
+        'get_started_heading' => 'Get Started',
+        'get_started_body' => 'Initialize your application with the recommended defaults.',
+
+        // Shared foundation
+        'shared_heading' => 'Shared by every product',
+        'shared_lead' => 'Every Laravel product starts with the same foundation.',
+        'shared_body' => 'Penova Core brings those common building blocks together into a single, cohesive platform, so you can focus on building your product instead of rebuilding its infrastructure.',
+
+        // What is in the Core
+        'features_heading' => "What's in the Core",
         'features' => [
-            'auth' => ['title' => 'Authentication & Accounts', 'desc' => 'Full login, registration and password reset flow, ready to drop into any product Workspace.'],
-            'users' => ['title' => 'Users & Roles', 'desc' => 'Workspace screens to manage users, roles and permissions without any extra packages.'],
-            'settings' => ['title' => 'Settings & Notifications', 'desc' => 'Runtime settings and a shared notification feed, so every module can reuse the same surface.'],
-            'ui' => ['title' => 'Workspace UI & DataTable', 'desc' => 'A clean Workspace layout, reusable components and a server-side DataTable pattern for any CRUD page.'],
+            'auth' => ['title' => 'Authentication & Access', 'desc' => 'Authentication, users, roles, permissions, and account management.'],
+            'workspace' => ['title' => 'Workspace', 'desc' => 'A unified interface for managing your application and hosting product modules.'],
+            'services' => ['title' => 'Shared Services', 'desc' => 'Settings, notifications, tables, and reusable interface components shared across every module.'],
+            'architecture' => ['title' => 'Modular Architecture', 'desc' => 'A stable core designed to grow through independent modules.'],
         ],
+
+        // Extend with Modules
+        'modules_heading' => 'Extend with Modules',
+        'modules_lead' => 'Product capabilities belong in modules.',
+        'modules_intro' => 'The Core remains focused on shared infrastructure while modules add the functionality that makes each product unique.',
         'modules' => [
-            'commerce' => ['title' => 'Commerce', 'desc' => 'Add selling as a module — products, cart, checkout and orders.'],
-            'messaging' => ['title' => 'Messaging', 'desc' => 'SMS and transactional notifications through one module.'],
-            'payments' => ['title' => 'Payments', 'desc' => 'Payment-gateway integration as an extensible module layer.'],
+            'commerce' => ['title' => 'Commerce', 'desc' => 'Catalogs, checkout, orders, and commerce workflows.'],
+            'messaging' => ['title' => 'Messaging', 'desc' => 'Communication and notification workflows.'],
+            'payments' => ['title' => 'Payments', 'desc' => 'Payment gateways and billing integrations.'],
+        ],
+
+        // Design philosophy
+        'philosophy_heading' => 'Design Philosophy',
+        'philosophy' => [
+            'small' => 'Keep the Core small.',
+            'share' => 'Share what every product needs.',
+            'build' => 'Build everything else as modules.',
         ],
     ],
 ];
