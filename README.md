@@ -2,46 +2,37 @@
 
 _Read this in: **English** (below) · [فارسی](#فارسی)_
 
-Penova Core is the Laravel foundation for building modular monolith products with a
-Core + Modules architecture.
+**The shared foundation for modular Laravel products.**
 
-It ships a production-ready **Workspace** - authentication, users, roles and
-permissions, settings, notifications, an activity log, a UI component set and a
-reusable server-side DataTable - so you can focus on your product instead of
-rebuilding the same foundation every project.
+Penova Core provides the shared infrastructure that modular Laravel products are
+built on - authentication, access control, settings, notifications, and a unified
+Workspace - so every module builds on a consistent foundation.
 
-This repository is **Core only**: it contains no business modules (CRM,
-Booking, blog, …). Business capabilities install on top of Core as separate modules.
+## Design principles
 
-## What Penova Core is
+Penova Core is shaped by three principles:
 
-- A **free, complete Laravel core** that solves the parts repeated in most projects
-  once: auth, users, roles, settings, notifications, activity logs, UI and data
-  tables.
-- A **modular monolith**: one deployable application split into a product-agnostic
-  `app/Core` layer and a business-specific `app/Modules` layer. **Core never depends
-  on Modules; Modules build on Core.**
+- **Keep the Core small.**
+- **Share what every product needs.**
+- **Build everything else as modules.**
 
-## Features
+The Core stays focused on shared infrastructure; the capabilities that make each
+product unique live in independent modules. **Core never depends on modules;
+modules build on Core.**
 
-- **Authentication** - login, optional registration, forgot/reset password.
-- **Users & Roles** - Workspace screens with a simple permission middleware, no
-  extra package required.
-- **Settings & White Label** - runtime settings plus branding (name, logo, color,
-  footer) reflected across the Workspace.
-- **Notifications** - Laravel database notifications as a shared surface, with an
-  unread badge available to every module.
-- **Activity Logs** - automatic created/updated/deleted logging via a trait.
-- **Workspace UI & Components** - ready layouts (Vue 3, Inertia 2, Tailwind 4) and
-  shared components: Button, TextInput, Modal, Toast, Pagination, DataTable.
-- **DataTable pattern** - a backend builder for server-side search/sort/pagination
-  and a matching `DataTable.vue` for any CRUD screen.
+## What's in the Core
 
-## What is *not* in Core
+- **Authentication & access** - login, optional registration, password reset, and
+  Workspace screens for users, roles, and permissions.
+- **Workspace** - a unified interface (Vue 3, Inertia 2, Tailwind 4) for managing
+  your application and hosting product modules.
+- **Shared services** - runtime settings with white-label branding, database
+  notifications, an activity log, and a reusable UI component set.
+- **DataTable pattern** - a server-side builder plus a matching `DataTable.vue` for
+  any CRUD screen.
 
-To keep Core product-agnostic, these install as separate modules: business modules
-(CRM, Booking, blog, …), cart/checkout, payment gateways, SMS/messaging, and
-domain-specific frontend pages.
+This repository is **Core only** - it ships no business module. Business
+capabilities (CRM, booking, blog, …) install on top of Core as separate modules.
 
 ## Requirements
 
@@ -104,9 +95,9 @@ The interface is English by default; the setup can switch it to Persian, or set
 `APP_LOCALE=fa` in `.env` yourself. If anything goes wrong, see the
 [troubleshooting guide](docs/guides/troubleshooting-core.md).
 
-## Adding modules
+## Extend with modules
 
-Core is built to host business modules. Each module ships its own service provider
+Product capabilities belong in modules. Each module ships its own service provider
 and declares what it contributes through a single Manifest. Wire one in by adding
 its provider to `config/penova.php`:
 
@@ -142,45 +133,36 @@ module contract.
 
 _[English](#penova-core) بالا · **فارسی** در این بخش_
 
-Penova Core هستهٔ لاراولی برای ساختِ محصولاتِ modular monolith با معماری Core + Modules
-است.
+**زیرساخت مشترک برای محصولات ماژولار Laravel**
 
-یک **میزکارِ (Workspace) آمادهٔ تولید** ارائه می‌دهد - احراز هویت، کاربران، نقش‌ها و
-دسترسی‌ها، تنظیمات، اعلان‌ها، لاگِ فعالیت، مجموعه‌کامپوننت‌های UI و یک DataTableِ
-سمت‌سرورِ قابل‌استفادهٔ مجدد - تا به‌جای بازسازیِ همان زیرساخت در هر پروژه، روی محصولِ
-خودتان تمرکز کنید.
+Penova Core زیرساختِ مشترکی را فراهم می‌کند که محصولاتِ ماژولارِ Laravel بر پایهٔ آن ساخته
+می‌شوند - احراز هویت، کنترلِ دسترسی، تنظیمات، اعلان‌ها و یک Workspaceِ یکپارچه - تا هر
+ماژول بر پایه‌ای یکسان توسعه پیدا کند.
 
-این مخزن **فقط Core** است؛ هیچ ماژولِ بیزنسی (CRM، Booking، blog، …) ندارد. قابلیت‌های
-بیزنسی به‌صورتِ ماژول‌های جداگانه روی Core نصب می‌شوند.
+## اصولِ طراحی
 
-## Penova Core چیست
+Penova Core بر پایهٔ سه اصل شکل گرفته است:
 
-- یک **هستهٔ رایگان و کاملِ لاراول** که بخش‌های تکرارشونده در بیشترِ پروژه‌ها را یک‌بار
-  حل می‌کند: احراز هویت، کاربران، نقش‌ها، تنظیمات، اعلان‌ها، لاگِ فعالیت، UI و جدول‌های
-  داده.
-- یک **modular monolith**: یک اپلیکیشنِ قابل‌استقرار که به لایهٔ product-agnosticِ
-  `app/Core` و لایهٔ بیزنسیِ `app/Modules` تقسیم شده است. **Core هرگز به Modules وابسته
-  نیست؛ Modules روی Core ساخته می‌شوند.**
+- **Core را کوچک و متمرکز نگه دارید.**
+- **آنچه میان همه‌ی محصولات مشترک است را در Core قرار دهید.**
+- **تمام قابلیت‌های اختصاصی را در قالب ماژول توسعه دهید.**
 
-## ویژگی‌ها
+هسته روی زیرساختِ مشترک متمرکز می‌ماند و قابلیت‌هایی که هر محصول را منحصربه‌فرد می‌کنند در
+ماژول‌های مستقل قرار می‌گیرند. **Core هرگز به Modules وابسته نیست؛ Modules روی Core ساخته
+می‌شوند.**
 
-- **احراز هویت** - ورود، ثبت‌نامِ اختیاری، فراموشی/بازیابیِ رمز.
-- **کاربران و نقش‌ها** - صفحاتِ میزکار با یک middlewareِ ساده، بدونِ پکیجِ اضافه.
-- **تنظیمات و White Label** - تنظیماتِ runtime به‌همراه برندینگ (نام، لوگو، رنگ، فوتر)
-  که در سراسرِ میزکار بازتاب می‌یابد.
-- **اعلان‌ها** - database notificationsِ لاراول به‌عنوان سطحِ مشترک، با badgeِ
-  خوانده‌نشده برای همهٔ ماژول‌ها.
-- **لاگِ فعالیت** - ثبتِ خودکارِ created/updated/deleted از طریقِ یک trait.
-- **UI و کامپوننت‌های میزکار** - layoutهای آماده (Vue 3، Inertia 2، Tailwind 4) و
-  کامپوننت‌های مشترک: Button، TextInput، Modal، Toast، Pagination، DataTable.
-- **الگوی DataTable** - یک builder در backend برای search/sort/paginationِ سمت‌سرور و
-  `DataTable.vue`ِ متناظر برای هر صفحهٔ CRUD.
+## آنچه در Core قرار دارد
 
-## چه چیزهایی داخلِ Core نیست
+- **احراز هویت و دسترسی** - ورود، ثبت‌نامِ اختیاری، بازیابیِ رمز، و صفحاتِ میزکار برای
+  کاربران، نقش‌ها و مجوزها.
+- **Workspace** - یک محیطِ یکپارچه (Vue 3، Inertia 2، Tailwind 4) برای مدیریتِ محصول و
+  میزبانی از ماژول‌ها.
+- **سرویس‌های مشترک** - تنظیماتِ runtime با برندینگِ White Label، اعلان‌ها، لاگِ فعالیت و
+  مجموعه‌کامپوننت‌های UIِ قابل‌استفادهٔ مجدد.
+- **الگوی DataTable** - یک builderِ سمت‌سرور و `DataTable.vue`ِ متناظر برای هر صفحهٔ CRUD.
 
-برای این‌که Core محصول-محور نماند، این موارد به‌صورتِ ماژولِ جداگانه نصب می‌شوند: ماژول‌های
-بیزنسی (CRM، Booking، blog، …)، سبد خرید/Checkout، درگاه‌های پرداخت، پیامک/پیام‌رسانی، و
-صفحاتِ frontendِ دامین‌محور.
+این مخزن **فقط Core** است و هیچ ماژولِ بیزنسی ندارد. قابلیت‌های بیزنسی (CRM، Booking،
+blog، …) به‌صورتِ ماژول‌های جداگانه روی Core نصب می‌شوند.
 
 ## پیش‌نیازها
 
@@ -242,11 +224,11 @@ php artisan serve
 `APP_LOCALE=fa` را در `.env` قرار دهید. اگر مشکلی پیش آمد، [راهنمای عیب‌یابی](docs/guides/troubleshooting-core.md)
 را ببینید.
 
-## افزودنِ ماژول‌ها
+## توسعه با ماژول‌ها
 
-Core برای میزبانیِ ماژول‌های بیزنسی ساخته شده است. هر ماژول ServiceProviderِ خودش را دارد و
-آنچه را ارائه می‌دهد از طریقِ یک Manifest اعلام می‌کند. یک ماژول را با افزودنِ providerش به
-`config/penova.php` وصل کنید:
+قابلیت‌های اختصاصی هر محصول در قالبِ ماژول توسعه پیدا می‌کنند. هر ماژول ServiceProviderِ
+خودش را دارد و آنچه را ارائه می‌دهد از طریقِ یک Manifest اعلام می‌کند. یک ماژول را با افزودنِ
+providerش به `config/penova.php` وصل کنید:
 
 ```php
 'modules' => [

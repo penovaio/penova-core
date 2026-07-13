@@ -1,9 +1,18 @@
-# Penova Core — Architecture
+# Penova Core - Architecture
 
-Penova Core is a **Laravel product factory core**: the shared foundation
-that products (CRM, CMS, …) are built on, so the 90%-repeated
-parts — auth, users, RBAC, settings, notifications, audit logs, UI
-components, data tables — are solved exactly once.
+**The shared foundation for modular Laravel products.**
+
+Penova Core is the shared foundation that modular Laravel products are built on, so
+the parts repeated across most products - auth, users, RBAC, settings,
+notifications, audit logs, UI components, data tables - are solved exactly once.
+
+## Design principles
+
+- **Keep the Core small.**
+- **Share what every product needs.**
+- **Build everything else as modules.**
+
+Everything below is how these principles are enforced in the architecture.
 
 **Stack:** Laravel 12 · Vue 3 + Inertia.js 2 · Tailwind CSS 4 · MySQL
 
@@ -27,7 +36,7 @@ app/
    thing, it moves into `app/Core`.
 
 These are enforced by convention and comments (see
-`PenovaCoreServiceProvider`), not tooling — add an architecture test
+`PenovaCoreServiceProvider`), not tooling - add an architecture test
 (e.g. pest-plugin-arch) when the first real module lands.
 
 ## Backend layout
@@ -52,22 +61,22 @@ routes/penova.php  composes each Core module's own routes.php
 
 Each Core module is **self-contained**: its controllers, models,
 requests, policies and its own `routes.php` live together.
-`routes/penova.php` only composes them — auth routes on the plain `web`
+`routes/penova.php` only composes them - auth routes on the plain `web`
 group, everything else under `/{workspace-prefix}` + `auth` middleware with
 route names `penova.*`.
 
 Key seams modules program against:
 
-- `App\Models\User` — thin subclass of `Core\Users\Models\User`; keeps
+- `App\Models\User` - thin subclass of `Core\Users\Models\User`; keeps
   native Laravel bindings working while behaviour lives in Core.
-- `permission:<slug>` middleware + `$user->hasPermission()` — RBAC is
+- `permission:<slug>` middleware + `$user->hasPermission()` - RBAC is
   intentionally package-free; swap in spatie/laravel-permission inside
   `Core\Roles` later without touching consumers.
-- `SettingsManager` singleton — runtime (DB) settings, cached; deploy
+- `SettingsManager` singleton - runtime (DB) settings, cached; deploy
   config stays in `config/penova.php`.
-- `ActivityLogger` / `RecordsActivity` trait — one-line audit logging
+- `ActivityLogger` / `RecordsActivity` trait - one-line audit logging
   for any model.
-- `DataTableBuilder` — pairs with `DataTable.vue` over a query-string
+- `DataTableBuilder` - pairs with `DataTable.vue` over a query-string
   contract (`?search&sort&direction&per_page&page`).
 
 ## Frontend layout
@@ -96,7 +105,7 @@ imports; a page name with no registry entry fails loudly.
 
 > **Experimental.** This module-frontend seam is experimental (RFC-006 / D-028): it
 > is conspicuously labelled and may change or be withdrawn without a MAJOR until a
-> second independent Module graduates it — it is not yet under the stability
+> second independent Module graduates it - it is not yet under the stability
 > promise. See `app/Modules/README.md` (the primary seam doc for Module authors).
 
 Shared Inertia props (`HandleInertiaRequests`): `app.name`, `auth.user`
@@ -116,9 +125,9 @@ Module migrations live inside the module
 
 ## Adding a product module (the point of all this)
 
-1. `app/Modules/<Name>/` — provider, `routes.php`, controllers, models,
+1. `app/Modules/<Name>/` - provider, `routes.php`, controllers, models,
    migrations, seeder for its permissions.
-2. `resources/js/Modules/<Name>/Pages/…` — Vue pages using Core layouts
+2. `resources/js/Modules/<Name>/Pages/…` - Vue pages using Core layouts
    and components.
 3. Register the provider in `config/penova.php` → `modules`.
 
