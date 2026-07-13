@@ -7,6 +7,23 @@ misbehaves see [docs/guides/troubleshooting-core.md](docs/guides/troubleshooting
 Penova Core follows semantic versioning: breaking changes to the public contract
 land only on a MAJOR, always with a documented migration path.
 
+## [1.1.0] - 2026-07-12
+
+- **Removed the bundled reference module.** Core now ships with no business
+  module at all - `app/Modules/` carries only the module author guide. A fresh
+  install is unaffected, because Core already enabled no module by default. The
+  installer's starter profiles are now `minimal` and `standard` (the demo
+  profile that enabled the reference module is gone). To build your own module,
+  see the module author guide at `app/Modules/README.md`.
+- **Philosophy-led identity.** The landing page, README, and docs now lead with
+  Penova Core's positioning - *the shared foundation for modular Laravel
+  products* - and its three design principles: keep the Core small, share what
+  every product needs, and build everything else as modules.
+- **Redesigned landing page.** A cleaner `/` with the tagline, a Get Started
+  step, "what's in the Core", the module directions, and the design principles.
+- **Plain hyphens.** Replaced typographic dashes with plain hyphens across the
+  source and docs.
+
 ## [1.0.4] - 2026-07-12
 
 A patch that smooths out installation. No changes to the public contract.

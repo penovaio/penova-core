@@ -5,8 +5,8 @@
 | Penova Core Configuration
 |--------------------------------------------------------------------------
 |
-| Central configuration for the Penova product factory core. Products
-| built on top of Penova (Store, CMS, ...) override these values
+| Central configuration for Penova Core, the shared foundation for modular
+| Laravel products. Products built on top of Penova (CRM, CMS, ...) override these values
 | in their own .env / config, never by editing Core code.
 |
 */
@@ -17,7 +17,7 @@ return [
     'name' => env('PENOVA_NAME', 'Penova'),
 
     // Platform version, shown in the Workspace hero and What's New.
-    'version' => env('PENOVA_VERSION', '1.0.4'),
+    'version' => env('PENOVA_VERSION', '1.1.0'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,16 @@ return [
     ],
 
     'changelog' => [
+        [
+            'version' => '1.1.0',
+            'date' => '2026-07-12',
+            'highlights' => [
+                'Removed the bundled reference module - Core ships module-free',
+                'Installer starter profiles are now minimal and standard',
+                'Philosophy-led identity: the shared foundation for modular Laravel products',
+                'Redesigned landing page around the three design principles',
+            ],
+        ],
         [
             'version' => '1.0.4',
             'date' => '2026-07-12',
@@ -63,7 +73,7 @@ return [
             'version' => '1.0.1',
             'date' => '2026-07-12',
             'highlights' => [
-                'Interactive project setup — php artisan penova:setup',
+                'Interactive project setup - php artisan penova:setup',
                 'MIT License',
                 'Bilingual README (English and Persian)',
                 'Configurable application timezone (APP_TIMEZONE)',
@@ -74,7 +84,7 @@ return [
             'date' => '2026-07-12',
             'highlights' => [
                 'First stable release',
-                'Store decoupled — Core boots complete with no business module',
+                'Core boots complete with no business module',
                 'Locale-neutral UI: English base, Persian opt-in',
                 'Operator / Workspace across install, login and docs',
             ],
@@ -83,7 +93,7 @@ return [
             'version' => '1.0.0-rc.1',
             'date' => '2026-07-12',
             'highlights' => [
-                'Store decoupled — Core boots complete with no business module',
+                'Core boots complete with no business module',
                 'Locale-neutral UI: English base, Persian opt-in',
                 'Experimental module-frontend seam',
                 'Operator / Workspace naming across install, login and docs',
@@ -137,7 +147,7 @@ return [
     | Seed Operator
     |--------------------------------------------------------------------------
     | Credentials for the initial seeded Operator (used only by
-    | PenovaCoreSeeder). Dev/test convenience — override via env in any real
+    | PenovaCoreSeeder). Dev/test convenience - override via env in any real
     | environment and rotate after first login (builder-owned; D-014 / 15).
     */
     'operator' => [
@@ -150,7 +160,7 @@ return [
     | Authentication
     |--------------------------------------------------------------------------
     | Registration is optional per product: an internal admin tool turns
-    | it off, a public storefront turns it on.
+    | it off, a public sign-up page turns it on.
     */
     'auth' => [
         // Core default: self-registration OFF. Products that need
@@ -189,12 +199,12 @@ return [
     | group. Modules are free to introduce new area keys (the
     | recommendation is one area per module, named after it); a key
     | missing from this map falls back to a label formatted from the key
-    | itself ("store-extras" → "Store Extras") on the frontend.
+    | itself ("blog-extras" → "Blog Extras") on the frontend.
     */
     'widgets' => [
         'areas' => [
             'core' => 'عمومی',
-            // Module area headings are NOT declared here — Core carries no
+            // Module area headings are NOT declared here - Core carries no
             // Module-specific vocabulary. A key missing from this map falls
             // back to a label formatted from the key on the frontend.
         ],
@@ -207,8 +217,8 @@ return [
     | Business modules living in app/Modules. Each entry points to the
     | module's service provider; Core boots them but never depends on them.
     | A provider implementing the PenovaModule contract (see
-    | app/Core/Support/PenovaModule.php) declares what it contributes —
-    | menu, widgets, permissions — through one Manifest. This list is the
+    | app/Core/Support/PenovaModule.php) declares what it contributes -
+    | menu, widgets, permissions - through one Manifest. This list is the
     | ONLY place modules get wired in.
     |
     | 'modules' => [
@@ -217,7 +227,7 @@ return [
     */
     'modules' => [
         // Core ships with NO business module enabled (D-026): Core is complete
-        // on its own. Add a Module's provider class-string here to wire it in —
+        // on its own. Add a Module's provider class-string here to wire it in -
         // Core registers providers opaquely and names no specific Module:
         //     App\Modules\<Name>\<Name>ServiceProvider::class,
     ],
