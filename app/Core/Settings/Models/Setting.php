@@ -5,7 +5,7 @@ namespace App\Core\Settings\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Core\Settings — one key-value row, optionally grouped.
+ * Core\Settings - one key-value row, optionally grouped.
  *
  * Read/write through SettingsManager (cached), not this model directly.
  */

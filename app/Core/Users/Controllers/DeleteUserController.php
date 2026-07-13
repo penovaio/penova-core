@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 
 /**
- * Core\Users — deletes a user (penova.users.destroy).
+ * Core\Users - deletes a user (penova.users.destroy).
  * See ListUsersController for the module-wide authorization notes.
  */
 class DeleteUserController extends Controller

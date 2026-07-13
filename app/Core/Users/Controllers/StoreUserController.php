@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Core\Users — persists a new user (penova.users.store).
+ * Core\Users - persists a new user (penova.users.store).
  * Authorization lives in StoreUserRequest + the users.manage route
  * middleware; see ListUsersController for the module-wide notes.
  */

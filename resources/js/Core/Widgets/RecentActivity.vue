@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core widget — latest audit-log entries (key "core-recent-activity").
+ * Core widget - latest audit-log entries (key "core-recent-activity").
  * The full filterable trail lives at /admin/logs; this is the teaser.
  */
 import { computed } from 'vue';

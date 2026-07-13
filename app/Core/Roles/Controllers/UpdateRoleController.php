@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Core\Roles — renames a role / resyncs its permissions (penova.roles.update).
+ * Core\Roles - renames a role / resyncs its permissions (penova.roles.update).
  * The slug is immutable after creation (it is the stable identifier code
  * checks against), hence no slug rule here.
  */

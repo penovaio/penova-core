@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core widget — live user/role counters. Registered by
+ * Core widget - live user/role counters. Registered by
  * PenovaCoreServiceProvider (CORE_WIDGETS, key "core-stats"); data comes
  * from the Workspace page's `stats` prop.
  */

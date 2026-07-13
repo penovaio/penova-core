@@ -31,7 +31,7 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', ResetPasswordController::class)->name('password.update');
 
     // Self-registration is opt-in per product (PENOVA_REGISTRATION=true).
-    // Note: evaluated at boot — rebuild the route cache (route:cache)
+    // Note: evaluated at boot - rebuild the route cache (route:cache)
     // after toggling the flag in production.
     if (config('penova.auth.registration')) {
         Route::get('register', ShowRegisterController::class)->name('register');

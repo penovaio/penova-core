@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | Each Core module keeps its own routes.php next to its code
 | (self-contained modules); this file only composes them.
 |
-| Product Modules do NOT add routes here — each module's service
+| Product Modules do NOT add routes here - each module's service
 | provider loads its own app/Modules/<Name>/routes.php.
 */
 

@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 /**
- * Core\Support — a lightweight platform health snapshot for the Workspace.
+ * Core\Support - a lightweight platform health snapshot for the Workspace.
  *
  * Each subsystem is probed cheaply and defensively (one try/catch each) so a
  * single failure degrades to a "warning" row instead of breaking the page.
- * Reports Ready/Warning only — not a metrics dashboard.
+ * Reports Ready/Warning only - not a metrics dashboard.
  */
 final class PlatformHealth
 {

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * Core\Roles — a named set of permissions (RBAC).
+ * Core\Roles - a named set of permissions (RBAC).
  *
  * Kept dependency-free on purpose: if a product later needs
  * spatie/laravel-permission, swap the internals here without touching

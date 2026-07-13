@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Core\Roles — creates a role with its permission set (penova.roles.store).
+ * Core\Roles - creates a role with its permission set (penova.roles.store).
  */
 class StoreRoleController extends Controller
 {

@@ -6,7 +6,7 @@ use App\Core\Logs\Services\ActivityLogger;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Core\Support — drop-in audit logging for any Eloquent model.
+ * Core\Support - drop-in audit logging for any Eloquent model.
  *
  * Add `use RecordsActivity;` to a model (Core or Module) and its
  * created / updated / deleted events are written to the activity log

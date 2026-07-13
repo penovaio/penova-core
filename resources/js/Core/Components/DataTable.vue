@@ -1,11 +1,11 @@
 <script setup>
 /**
- * Core\DataTable (frontend half) — pairs with App\Core\DataTable\DataTableBuilder.
+ * Core\DataTable (frontend half) - pairs with App\Core\DataTable\DataTableBuilder.
  *
  * Receives a Laravel paginator and a column definition, emits the
  * builder's query-string contract (?search, ?sort, ?direction, ?page)
  * via Inertia partial visits. Core pages and Module pages configure it
- * with props only — table behaviour lives here, once.
+ * with props only - table behaviour lives here, once.
  *
  * columns: [{ key: 'name', label: 'نام', sortable: true }, ...]
  * Cell rendering can be customized per column with a #cell-<key> slot.
@@ -19,11 +19,11 @@ const props = defineProps({
     paginator: { type: Object, required: true }, // Laravel LengthAwarePaginator JSON
     columns: { type: Array, required: true },
     // Extra query parameters the page wants to keep alongside the
-    // table's own contract — e.g. filter selects ({ type: 'physical' }).
+    // table's own contract - e.g. filter selects ({ type: 'physical' }).
     // Changing a value triggers a reload; empty values are dropped from
     // the URL. DataTableBuilder-side, apply them with ->when() clauses.
     params: { type: Object, default: () => ({}) },
-    // Tell users WHAT the search matches (e.g. "Search name or SKU…") — a
+    // Tell users WHAT the search matches (e.g. "Search name or SKU…") - a
     // page passing its own value keeps it; omitted, it falls back to the
     // generic catalog placeholder below.
     searchPlaceholder: { type: String, default: '' },

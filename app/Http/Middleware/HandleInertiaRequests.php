@@ -24,7 +24,7 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user();
 
         // Menu items / widgets carrying a 'permission' key are only
-        // shared with users holding it (per-request — the collected
+        // shared with users holding it (per-request - the collected
         // descriptors themselves are app-wide singletons).
         $allowed = fn (array $item) => ! isset($item['permission'])
             || ($user?->hasPermission($item['permission']) ?? false);
@@ -38,13 +38,13 @@ class HandleInertiaRequests extends Middleware
 
             // The configured Workspace URI prefix, shared so the SPA builds
             // Workspace paths from it (useWorkspacePath) instead of hardcoding
-            // "/admin" — honours PENOVA_WORKSPACE_PREFIX end to end (D-024).
+            // "/admin" - honours PENOVA_WORKSPACE_PREFIX end to end (D-024).
             'workspace' => [
                 'prefix' => config('penova.workspace.prefix'),
             ],
 
             // The active locale, its text direction (the only locale metadata
-            // Core standardizes — RFC-005 / D-027), and the frontend message
+            // Core standardizes - RFC-005 / D-027), and the frontend message
             // catalog for that locale with the English base merged under it so a
             // missing translation falls back to English. Laravel PHP catalogs
             // (lang/en, lang/fa) are the single source of truth; the SPA reads
@@ -57,8 +57,8 @@ class HandleInertiaRequests extends Middleware
             ),
 
             // Resolved White Label branding: runtime settings (admin-owned)
-            // layered over config/penova.php defaults, so every page — the
-            // admin shell and the public welcome page — always gets complete
+            // layered over config/penova.php defaults, so every page - the
+            // admin shell and the public welcome page - always gets complete
             // values, even before anything is saved. Empty DB values are
             // dropped so a blank field falls back to the config default
             // rather than overriding it with "".
@@ -71,17 +71,17 @@ class HandleInertiaRequests extends Middleware
             ),
 
             // Frontend seam (menu / widgets / widgetAreas): these
-            // prop shapes are Core internals, not a declared public contract —
+            // prop shapes are Core internals, not a declared public contract -
             // the Manifest is the contract (D-023). See app/Modules/README.md,
             // "Frontend seam stability".
             //
             // Sidebar items (Core + Modules, order-sorted, permission-
-            // filtered). Route names are resolved to URLs here — at
+            // filtered). Route names are resolved to URLs here - at
             // request time, when all module routes are registered.
             //
             // Core items carry a 'label_key' resolved to the active locale
             // here (RFC-005 / D-027, menu Option B); Module items carry a
-            // literal 'label' and pass through untouched — the 'label_key'
+            // literal 'label' and pass through untouched - the 'label_key'
             // marker is Core-only, so Module labels are never translated.
             'menu' => collect(app('penova.menu'))
                 ->filter($allowed)
@@ -94,7 +94,7 @@ class HandleInertiaRequests extends Middleware
                 ->all(),
 
             // Widget descriptors (Core + Modules, order-sorted,
-            // permission-filtered). Kept dormant for future use — the
+            // permission-filtered). Kept dormant for future use - the
             // Workspace panel root does not render these.
             'widgets' => collect(app('penova.widgets'))
                 ->filter($allowed)

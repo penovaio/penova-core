@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Modules\{{ name }} — scaffolded list page, rendered by
+ * Modules\{{ name }} - scaffolded list page, rendered by
  * {{ name }}IndexController via Inertia::render('Modules/{{ name }}/Index').
  * Replace the placeholder copy and grow the columns with the domain.
  */
@@ -14,7 +14,7 @@ defineProps({
     items: Object, // Laravel LengthAwarePaginator JSON
 });
 
-// Build Workspace-prefixed URLs from config — never hardcode the prefix. This
+// Build Workspace-prefixed URLs from config - never hardcode the prefix. This
 // targets the '{{ module }}.create' route (GET {{ slug }}/create).
 const ws = useWorkspacePath();
 

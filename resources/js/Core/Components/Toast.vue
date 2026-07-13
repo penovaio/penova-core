@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — renders flash messages shared by HandleInertiaRequests
+ * Core\UI - renders flash messages shared by HandleInertiaRequests
  * ("flash.success" / "flash.error") as auto-dismissing toasts.
  * Rendered once by WorkspaceLayout; pages just redirect back()->with(...).
  */

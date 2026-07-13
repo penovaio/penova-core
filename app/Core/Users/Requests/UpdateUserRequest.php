@@ -7,7 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
 /**
- * Core\Users — validation for updating a user from the panel.
+ * Core\Users - validation for updating a user from the panel.
  * Password is optional: blank means "keep the current one".
  * Authorization delegates to UserPolicy so there is one source of truth.
  */

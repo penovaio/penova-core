@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Core\Auth — validates and rate-limits login attempts.
+ * Core\Auth - validates and rate-limits login attempts.
  */
 class LoginRequest extends FormRequest
 {

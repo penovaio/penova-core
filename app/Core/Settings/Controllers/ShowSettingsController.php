@@ -8,11 +8,11 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Settings — the panel Settings page (penova.settings.index).
+ * Core\Settings - the panel Settings page (penova.settings.index).
  *
  * Products extend the settings surface by seeding more keys and adding
  * fields to resources/js/Core/Pages/Settings/Index.vue (or their own
- * module settings page) — never by forking this controller.
+ * module settings page) - never by forking this controller.
  */
 class ShowSettingsController extends Controller
 {

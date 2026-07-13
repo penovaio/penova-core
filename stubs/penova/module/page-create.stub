@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Modules\{{ name }} — scaffolded create page, rendered by
+ * Modules\{{ name }} - scaffolded create page, rendered by
  * {{ name }}CreateController via Inertia::render('Modules/{{ name }}/Create').
  * Posts to {{ module }}.store; grow the fields with the domain.
  */
@@ -20,7 +20,7 @@ const form = useForm({
 </script>
 
 <template>
-    <WorkspaceLayout title="{{ name }} — ایجاد">
+    <WorkspaceLayout title="{{ name }} - ایجاد">
         <PageHeader title="ایجاد مورد جدید">
             <template #actions>
                 <Button variant="secondary" :href="ws('/{{ slug }}')">بازگشت به فهرست</Button>

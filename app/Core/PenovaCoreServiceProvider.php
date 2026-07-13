@@ -13,18 +13,18 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Penova Core — central service provider.
+ * Penova Core - central service provider.
  *
  * Everything the Core needs to run is registered here: config, routes,
  * middleware aliases, policies, singletons, and the product Modules
  * listed in config('penova.modules').
  *
- * ARCHITECTURE RULES (enforced by convention — keep them true):
+ * ARCHITECTURE RULES (enforced by convention - keep them true):
  *   1. app/Core NEVER imports from app/Modules. Core knows modules only
  *      as opaque provider class-strings in config/penova.php.
  *   2. Modules build ON Core: they may use Core models, services,
  *      middleware and Vue components freely.
- *   3. Code needed by two or more modules is Core code — move it here.
+ *   3. Code needed by two or more modules is Core code - move it here.
  */
 class PenovaCoreServiceProvider extends ServiceProvider
 {
@@ -41,7 +41,7 @@ class PenovaCoreServiceProvider extends ServiceProvider
         // Core items carry a 'label_key' (a catalog key under ui.nav) instead
         // of a literal 'label'; HandleInertiaRequests resolves it to the active
         // locale at share time (RFC-005 / D-027, menu Option B). Module menu
-        // items keep providing a literal 'label' — the presence of 'label_key'
+        // items keep providing a literal 'label' - the presence of 'label_key'
         // is the explicit Core-origin marker, so Module labels are never
         // reinterpreted as catalog keys.
         ['key' => 'workspace', 'label_key' => 'ui.nav.workspace', 'route' => 'penova.workspace', 'icon' => 'home', 'order' => 10],
@@ -53,7 +53,7 @@ class PenovaCoreServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Widgets Core itself ships — the widget set is built
+     * Widgets Core itself ships - the widget set is built
      * entirely from these descriptors, through the exact pipeline module
      * widgets use, so the pattern devs copy is the one Core runs.
      */
@@ -74,10 +74,10 @@ class PenovaCoreServiceProvider extends ServiceProvider
         // that future, and it is harmless today.
         $this->mergeConfigFrom(config_path('penova.php'), 'penova');
 
-        // Core singletons — the abstractions Modules program against.
+        // Core singletons - the abstractions Modules program against.
         $this->app->singleton(SettingsManager::class);
 
-        // The installed Modules' Manifest registry — the single source of
+        // The installed Modules' Manifest registry - the single source of
         // truth for everything Modules contribute (identities, menu items,
         // widget descriptors, permission slugs). The three panel-composition
         // bindings below all derive from it, so the module list is resolved
@@ -91,7 +91,7 @@ class PenovaCoreServiceProvider extends ServiceProvider
         }
 
         // Panel composition: Core's own contributions + whatever each Module
-        // declares through its Manifest, order-sorted. Lazy singletons —
+        // declares through its Manifest, order-sorted. Lazy singletons -
         // resolved once, on first use (Inertia share).
         $this->app->singleton('penova.menu', fn () => collect(self::CORE_MENU)
             ->concat(app(Support\ManifestRegistry::class)->menuItems())
@@ -100,7 +100,7 @@ class PenovaCoreServiceProvider extends ServiceProvider
             ->all());
 
         // Widgets are normalised so 'area' is always present ('core' when a
-        // descriptor omits it) — the widget areas by this field.
+        // descriptor omits it) - the widget areas by this field.
         $this->app->singleton('penova.widgets', fn () => collect(self::CORE_WIDGETS)
             ->concat(app(Support\ManifestRegistry::class)->widgetDescriptors())
             ->map(fn (array $widget) => [...$widget, 'area' => $widget['area'] ?? 'core'])
@@ -109,7 +109,7 @@ class PenovaCoreServiceProvider extends ServiceProvider
             ->all());
 
         // Flat list of every permission slug the Modules declare (from their
-        // Manifests). Not shared with the frontend — available for sanity
+        // Manifests). Not shared with the frontend - available for sanity
         // checks, artisan tooling, and future admin UI.
         $this->app->singleton('penova.permissions', fn () => app(Support\ManifestRegistry::class)->permissionSlugs());
     }

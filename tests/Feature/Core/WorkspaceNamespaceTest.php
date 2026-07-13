@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 /**
- * RFC-002 / D-024 — the three promises the admin→Workspace/Operator split
+ * RFC-002 / D-024 - the three promises the admin→Workspace/Operator split
  * makes. Each defends a promise, not an implementation detail (16).
  */
 

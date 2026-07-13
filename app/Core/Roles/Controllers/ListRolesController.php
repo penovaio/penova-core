@@ -11,7 +11,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Roles — the roles index page (penova.roles.index), including the
+ * Core\Roles - the roles index page (penova.roles.index), including the
  * permission catalogue for the inline create/edit modal.
  * Route-level guard: permission:roles.manage (see routes.php).
  */

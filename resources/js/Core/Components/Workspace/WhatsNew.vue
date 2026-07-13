@@ -1,7 +1,7 @@
 <script setup>
 /**
- * Core\UI — Workspace What's New. Reads config('penova.changelog')[0]
- * (Task 4) — null-safe, since a fresh install may ship no changelog yet.
+ * Core\UI - Workspace What's New. Reads config('penova.changelog')[0]
+ * (Task 4) - null-safe, since a fresh install may ship no changelog yet.
  * Dismissal is per-version so the next release re-surfaces automatically.
  */
 import { ref } from 'vue';
@@ -14,7 +14,7 @@ const props = defineProps({ whatsNew: { type: Object, default: null } });
 const { t } = useI18n();
 
 // Only build the key / touch localStorage when there is a changelog entry to
-// dismiss — preserves the null-safe behaviour for fresh installs.
+// dismiss - preserves the null-safe behaviour for fresh installs.
 const { dismissed, dismiss } = props.whatsNew
     ? useDismiss(`penova.dismiss.whatsnew.${props.whatsNew.version}`)
     : { dismissed: ref(false), dismiss: () => {} };

@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * Core\Users — canonical user model for every Penova product.
+ * Core\Users - canonical user model for every Penova product.
  *
  * App\Models\User extends this class so the framework-facing binding
  * (config/auth.php, factories, policies) keeps the native Laravel name

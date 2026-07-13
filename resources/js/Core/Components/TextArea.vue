@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — multiline text input with label and validation error, mirroring
+ * Core\UI - multiline text input with label and validation error, mirroring
  * TextInput. Works with Inertia's useForm:
  * <TextArea v-model="form.notes" :error="form.errors.notes" :rows="3" />
  */

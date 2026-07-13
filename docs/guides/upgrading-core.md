@@ -8,7 +8,7 @@ Each section is a task: what changed, and the path forward.
 ## Admin namespace retired: Workspace / Operator (RFC-002 / D-024)
 
 **Renamed and split.** The authenticated environment is the **Workspace** and the
-seeded person is the **Operator** — "admin" is retired for both (D-004 / D-006):
+seeded person is the **Operator** - "admin" is retired for both (D-004 / D-006):
 
 - The Workspace URL prefix is `/workspace` (was `/admin`), from
   `penova.workspace.prefix` (`PENOVA_WORKSPACE_PREFIX`).
@@ -22,7 +22,7 @@ seeded person is the **Operator** — "admin" is retired for both (D-004 / D-006
   account and role slug changed; `.env` files using `PENOVA_ADMIN_*` still work for
   now but are deprecated.
 - **Why MAJOR.** A public config namespace, a URL, and a persisted role slug
-  changed — breaking, so it lands on a MAJOR with this note and a one-cycle
+  changed - breaking, so it lands on a MAJOR with this note and a one-cycle
   fallback.
 - **Recovery path.**
   1. Prefer the new env vars: `PENOVA_WORKSPACE_PREFIX`, `PENOVA_OPERATOR_EMAIL`,
@@ -31,7 +31,7 @@ seeded person is the **Operator** — "admin" is retired for both (D-004 / D-006
      a deprecation notice) and removed at the next MAJOR.
   2. Update any hardcoded `/admin` links to `/workspace` (or your configured
      prefix).
-  3. No manual data migration is required — the `operator` role slug is migrated in
+  3. No manual data migration is required - the `operator` role slug is migrated in
      place, preserving existing permission grants and user assignments.
 
 ---
@@ -58,7 +58,7 @@ empty.
 identity. The panel is now internationalized: user-facing text lives in
 per-locale catalogs (`lang/en`, `lang/fa`), the base and fallback language is
 **English**, and the default install renders **English, left-to-right, with
-Latin numerals**. Persian is a first-party, opt-in **supported locale** — never
+Latin numerals**. Persian is a first-party, opt-in **supported locale** - never
 the default.
 
 - **Impact.** A deployment that relied on Core rendering Persian out of the box
@@ -67,7 +67,7 @@ the default.
   the Persian font (Yekan Bakh) plus Persian numerals apply only under the
   Persian locale.
 - **Why MAJOR.** No API, route, config key, or identifier changed, but the
-  shipped *default language and direction* change in a way every user observes —
+  shipped *default language and direction* change in a way every user observes -
   so it lands in a MAJOR release with this migration note.
 - **Recovery path.** To keep the Persian experience, select Persian as the
   application locale:
@@ -88,6 +88,6 @@ Module performs (e.g. `toLocaleString('fa-IR')` in Module pages) is the Module's
 own concern and is untouched.
 
 **No identifiers moved.** Route names, permission slugs, menu keys, config keys,
-and every other contract identifier are locale-invariant — only the human-facing
+and every other contract identifier are locale-invariant - only the human-facing
 label a user reads is translated. Menu labels Core owns are resolved per-locale;
 labels a Module provides remain the Module's own literal text.

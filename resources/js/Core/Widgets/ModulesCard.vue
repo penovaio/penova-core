@@ -1,9 +1,9 @@
 <script setup>
 /**
- * Core widget — the Penova Modules card (key "core-modules-card",
+ * Core widget - the Penova Modules card (key "core-modules-card",
  * order 900 so it stays at the bottom under module widgets).
  *
- * Points builders at the Module ecosystem — the layer where business
+ * Points builders at the Module ecosystem - the layer where business
  * capability lives. Core stays free and complete; capability is added at
  * the edges as Modules, never inside Core.
  */

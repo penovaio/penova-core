@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 
 /**
- * Core\Auth — handles a login attempt (POST /login).
+ * Core\Auth - handles a login attempt (POST /login).
  *
  * Extension seams (D-017): a two-factor challenge after authenticate(),
  * an email-verification gate, and single-session enforcement all slot in

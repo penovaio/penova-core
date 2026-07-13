@@ -5,7 +5,7 @@ namespace App\Core\Support\Commands;
 use Illuminate\Console\Command;
 
 /**
- * Core\Support — one-shot dev installer:
+ * Core\Support - one-shot dev installer:
  *
  *   php artisan penova:install          # migrate + seed
  *   php artisan penova:install --fresh  # drop everything first

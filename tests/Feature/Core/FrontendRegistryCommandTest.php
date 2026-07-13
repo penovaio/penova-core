@@ -4,7 +4,7 @@ use App\Core\Support\Commands\GenerateFrontendRegistryCommand;
 use App\Core\Support\FrontendRegistry;
 
 /**
- * P1 — the generate command in the CORE lane (no Module enabled). The registry
+ * P1 - the generate command in the CORE lane (no Module enabled). The registry
  * is a git-ignored build artifact: regenerated deterministically, provenance-
  * protected, and never source-controlled.
  */
@@ -20,7 +20,7 @@ test('the command generates a valid, git-ignored, empty registry in the Core lan
     expect($content)->toContain('export const modulePages = {};');
     expect(FrontendRegistry::verifyIntegrity($content))->toBeTrue();
 
-    // The artifact path is git-ignored — never source-controlled.
+    // The artifact path is git-ignored - never source-controlled.
     expect((string) file_get_contents(base_path('.gitignore')))->toContain('/resources/js/generated');
 });
 

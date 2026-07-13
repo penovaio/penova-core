@@ -1,6 +1,6 @@
 /.phpunit.cache
 /node_modules
-# Generated build artifacts — never source-controlled (RFC-006 / D-028):
+# Generated build artifacts - never source-controlled (RFC-006 / D-028):
 # the experimental module-frontend registry is regenerated from enabled Modules.
 /resources/js/generated
 /public/build
@@ -24,7 +24,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-# Local architecture scratch — a stale v0.1 snapshot, never a shipped surface.
+# Local architecture scratch - a stale v0.1 snapshot, never a shipped surface.
 /PENOVA_CORE_STRUCTURE.md
 /docs/superpowers
 /.superpowers

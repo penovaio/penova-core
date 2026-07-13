@@ -7,7 +7,7 @@ namespace App\Core\Support;
  *
  * A product Module's service provider implements this interface to
  * contribute to the Platform. A Module declares everything it contributes
- * through a SINGLE Manifest — its one coherent declaration — not through
+ * through a SINGLE Manifest - its one coherent declaration - not through
  * scattered static hooks (D-005; ../../../strategy/06-glossary.md;
  * "small contracts" in ../../../strategy/13-architecture-principles.md). The
  * Manifest's shape is the governed public contract settled by RFC-001 / D-023.
@@ -26,7 +26,7 @@ namespace App\Core\Support;
 interface PenovaModule
 {
     /**
-     * The Module's single Manifest — its complete declaration of what it
+     * The Module's single Manifest - its complete declaration of what it
      * contributes to the Platform.
      */
     public static function manifest(): Manifest;

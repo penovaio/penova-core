@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\Roles — role list with inline create/edit in a modal
+ * Core\Roles - role list with inline create/edit in a modal
  * (roles are few; a separate page per role is not worth it).
  */
 import { ref } from 'vue';

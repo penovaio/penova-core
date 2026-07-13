@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — standard text input with label and validation error slot.
+ * Core\UI - standard text input with label and validation error slot.
  * Works with Inertia's useForm: <TextInput v-model="form.email" :error="form.errors.email" />
  */
 defineProps({

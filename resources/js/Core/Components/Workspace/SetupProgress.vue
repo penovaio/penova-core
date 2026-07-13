@@ -1,9 +1,9 @@
 <script setup>
 /**
- * Core\UI — Workspace setup progress. Turns the onboarding view-model
+ * Core\UI - Workspace setup progress. Turns the onboarding view-model
  * (Task 4) into a checklist an admin can act on directly: incomplete
  * steps carry their own CTA, done steps just confirm. "Keep building"
- * guidance below has no done/undone state — it's always-on forward
+ * guidance below has no done/undone state - it's always-on forward
  * suggestions once the checklist is clear.
  */
 import { computed } from 'vue';

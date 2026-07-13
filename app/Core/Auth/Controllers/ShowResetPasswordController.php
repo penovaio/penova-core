@@ -8,7 +8,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Auth — shows the reset-password form for the emailed token
+ * Core\Auth - shows the reset-password form for the emailed token
  * (GET /reset-password/{token}).
  */
 class ShowResetPasswordController extends Controller

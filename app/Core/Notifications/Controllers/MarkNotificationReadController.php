@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Core\Notifications — marks one notification (or all, with id "all")
+ * Core\Notifications - marks one notification (or all, with id "all")
  * as read (penova.notifications.read).
  */
 class MarkNotificationReadController extends Controller

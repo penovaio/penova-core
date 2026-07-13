@@ -3,7 +3,7 @@
 use App\Core\Support\Manifest;
 
 /**
- * P0 — the EXPERIMENTAL frontend descriptor (RFC-006 / D-028): structural
+ * P0 - the EXPERIMENTAL frontend descriptor (RFC-006 / D-028): structural
  * validation and its named failure categories at Manifest-construction time.
  * The registration-time categories (unknown target area, unresolved entry,
  * incompatible peer/Core version, global cross-Module uniqueness) belong to the
@@ -20,7 +20,7 @@ test('a valid frontend section is declared and read back normalized', function (
         ],
     ]);
 
-    // A frontend widget entry owns {key, entry} only — area/title/order stay the
+    // A frontend widget entry owns {key, entry} only - area/title/order stay the
     // backend widget descriptor's, joined by the globally-unique key.
     expect($m->frontendContributions())->toBe([
         'widgets' => [['key' => 'blog-recent-posts', 'entry' => 'widgets/RecentPostsCard']],
@@ -35,13 +35,13 @@ test('missing sections default to empty and the Manifest stays immutable', funct
 
     expect($withFrontend->frontendContributions())
         ->toBe(['widgets' => [['key' => 'w', 'entry' => 'widgets/W']], 'pages' => []]);
-    // The original declaration is untouched — the section is a fresh instance.
+    // The original declaration is untouched - the section is a fresh instance.
     expect($base->frontendContributions())->toBe(['widgets' => [], 'pages' => []]);
 });
 
 test('an unknown section is a malformed-descriptor failure', function () {
     Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['layouts' => []]);
-})->throws(InvalidArgumentException::class, 'malformed descriptor — unknown section [layouts]');
+})->throws(InvalidArgumentException::class, 'malformed descriptor - unknown section [layouts]');
 
 test('a widget entry missing a required field is malformed', function () {
     Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['widgets' => [['key' => 'w']]]); // no entry
@@ -60,11 +60,11 @@ test('a duplicate widget key is a duplicate-contribution failure', function () {
         ['key' => 'dup', 'entry' => 'widgets/A'],
         ['key' => 'dup', 'entry' => 'widgets/B'],
     ]]);
-})->throws(InvalidArgumentException::class, 'duplicate contribution — [widgets] key [dup]');
+})->throws(InvalidArgumentException::class, 'duplicate contribution - [widgets] key [dup]');
 
 test('a duplicate page name is a duplicate-contribution failure', function () {
     Manifest::for('blog', 'Blog', 'A sample module', '1.0.0')->frontend(['pages' => [
         ['name' => 'Same', 'entry' => 'pages/A'],
         ['name' => 'Same', 'entry' => 'pages/B'],
     ]]);
-})->throws(InvalidArgumentException::class, 'duplicate contribution — [pages] name [Same]');
+})->throws(InvalidArgumentException::class, 'duplicate contribution - [pages] name [Same]');

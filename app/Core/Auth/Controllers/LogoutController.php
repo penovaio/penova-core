@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Core\Auth — logs the user out and invalidates the session (POST /logout).
+ * Core\Auth - logs the user out and invalidates the session (POST /logout).
  */
 class LogoutController extends Controller
 {

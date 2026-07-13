@@ -1,13 +1,13 @@
 <script setup>
 /**
- * Core\UI — renders one widget from its descriptor.
+ * Core\UI - renders one widget from its descriptor.
  *
  * Resolution (RFC-006 / D-028):
  *   Core widgets   → their own `component` ("Core/Widgets/X") against Core's glob.
  *   Module widgets → ONLY through the generated module-frontend registry, keyed by
  *     the widget's globally-unique `key`. Core keeps NO module-directory glob and
  *     no `component` path for Module widgets; the registry (a git-ignored build
- *     artifact — registry output) is the only resolver, and Core names no Module.
+ *     artifact - registry output) is the only resolver, and Core names no Module.
  *     The declared contract is the Manifest `frontend` section.
  *
  * A validly-registered widget whose component later fails to load fails SOFT

@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Hash;
  *
  * The seed Operator credentials come from config('penova.operator.email/password')
  * (env: PENOVA_OPERATOR_EMAIL / PENOVA_OPERATOR_PASSWORD). The defaults are a
- * dev/test convenience only — override or rotate them anywhere real.
+ * dev/test convenience only - override or rotate them anywhere real.
  *
  * Product Modules seed their OWN permissions in their own seeders
- * (e.g. StorePermissionsSeeder adds "store.manage") — they never edit
+ * (e.g. StorePermissionsSeeder adds "store.manage") - they never edit
  * this file.
  */
 class PenovaCoreSeeder extends Seeder
@@ -44,7 +44,7 @@ class PenovaCoreSeeder extends Seeder
         // seeders granted to the Operator role.
         $operator->permissions()->syncWithoutDetaching($permissions->pluck('id'));
 
-        // Plain member role with no Core permissions — products attach
+        // Plain member role with no Core permissions - products attach
         // their own module permissions (booking.view, ...) to it.
         Role::firstOrCreate(
             ['slug' => 'user'],
@@ -63,6 +63,6 @@ class PenovaCoreSeeder extends Seeder
 
         $user->roles()->syncWithoutDetaching($operator);
 
-        $this->command?->info("Operator account ready: {$email} (role: operator — dev credentials, rotate in production).");
+        $this->command?->info("Operator account ready: {$email} (role: operator - dev credentials, rotate in production).");
     }
 }

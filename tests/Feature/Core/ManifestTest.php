@@ -3,7 +3,7 @@
 use App\Core\Support\Manifest;
 
 /**
- * The Manifest value object — the carrier for a Module's single
+ * The Manifest value object - the carrier for a Module's single
  * declaration. These defend its declared shape and its declaration-like
  * (immutable) nature, not any storage internal (D-023 guardrail 1).
  */

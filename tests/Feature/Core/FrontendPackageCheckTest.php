@@ -3,8 +3,8 @@
 use App\Core\Support\FrontendPackageCheck;
 
 /**
- * P4 — EXPERIMENTAL frontend PACKAGE PAIRING + PEER checks (RFC-006 / D-028),
- * loud before runtime. Generic/contract test: no real Module — fake pairings and
+ * P4 - EXPERIMENTAL frontend PACKAGE PAIRING + PEER checks (RFC-006 / D-028),
+ * loud before runtime. Generic/contract test: no real Module - fake pairings and
  * injected installed/Core version maps exercise the two named failures directly.
  */
 
@@ -24,7 +24,7 @@ test('a matched package with compatible peers passes', function () use ($peers, 
     );
 })->throwsNoExceptions();
 
-test('module frontend package mismatch — the paired package is not installed', function () use ($core) {
+test('module frontend package mismatch - the paired package is not installed', function () use ($core) {
     FrontendPackageCheck::verify(
         paired(['name' => '@acme/catalog-frontend', 'version' => '^1.0']),
         [], // nothing installed
@@ -32,7 +32,7 @@ test('module frontend package mismatch — the paired package is not installed',
     );
 })->throws(InvalidArgumentException::class, 'module frontend package mismatch');
 
-test('module frontend package mismatch — installed major differs from the declared pairing', function () use ($core) {
+test('module frontend package mismatch - installed major differs from the declared pairing', function () use ($core) {
     FrontendPackageCheck::verify(
         paired(['name' => '@acme/catalog-frontend', 'version' => '^1.0']),
         ['@acme/catalog-frontend' => '2.0.0'], // major 2 ≠ declared major 1
@@ -40,7 +40,7 @@ test('module frontend package mismatch — installed major differs from the decl
     );
 })->throws(InvalidArgumentException::class, 'major version differs');
 
-test('module frontend peer incompatible — Core provides a different peer major', function () use ($core) {
+test('module frontend peer incompatible - Core provides a different peer major', function () use ($core) {
     FrontendPackageCheck::verify(
         paired(['name' => '@acme/catalog-frontend', 'version' => '^1.0', 'peers' => ['vue' => '^2.0']]),
         ['@acme/catalog-frontend' => '1.0.0'],
@@ -48,7 +48,7 @@ test('module frontend peer incompatible — Core provides a different peer major
     );
 })->throws(InvalidArgumentException::class, 'module frontend peer incompatible');
 
-test('module frontend peer incompatible — Core declares no such peer', function () use ($core) {
+test('module frontend peer incompatible - Core declares no such peer', function () use ($core) {
     FrontendPackageCheck::verify(
         paired(['name' => '@acme/catalog-frontend', 'version' => '^1.0', 'peers' => ['svelte' => '^4.0']]),
         ['@acme/catalog-frontend' => '1.0.0'],

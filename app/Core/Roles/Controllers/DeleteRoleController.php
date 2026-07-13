@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 
 /**
- * Core\Roles — deletes a role (penova.roles.destroy).
+ * Core\Roles - deletes a role (penova.roles.destroy).
  * RolePolicy::delete guards protected roles (e.g. "admin").
  */
 class DeleteRoleController extends Controller

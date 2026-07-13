@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
- * Core\Auth — minimal smoke tests. Each Core module grows its own
+ * Core\Auth - minimal smoke tests. Each Core module grows its own
  * test class under tests/Feature/Core as behaviour is added.
  */
 class AuthTest extends TestCase

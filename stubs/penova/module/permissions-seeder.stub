@@ -7,7 +7,7 @@ use App\Core\Roles\Models\Role;
 use Illuminate\Database\Seeder;
 
 /**
- * Modules\{{ name }} — seeds the module's permissions and grants them
+ * Modules\{{ name }} - seeds the module's permissions and grants them
  * to the Core Operator role. Register it in
  * database/seeders/DatabaseSeeder.php AFTER PenovaCoreSeeder, then run
  * `php artisan db:seed`. Idempotent.

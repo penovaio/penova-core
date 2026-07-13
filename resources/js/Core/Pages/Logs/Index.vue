@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\Logs — read-only audit trail.
+ * Core\Logs - read-only audit trail.
  */
 import WorkspaceLayout from '@/Core/Layouts/WorkspaceLayout.vue';
 import PageHeader from '@/Core/Components/PageHeader.vue';

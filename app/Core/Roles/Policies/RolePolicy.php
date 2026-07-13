@@ -6,7 +6,7 @@ use App\Core\Roles\Models\Role;
 use App\Core\Users\Models\User;
 
 /**
- * Core\Roles — sample policy showing the Core convention:
+ * Core\Roles - sample policy showing the Core convention:
  * policies live next to their module, authorization decisions delegate
  * to permission slugs so the RBAC backend stays swappable.
  */

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
 /**
- * Core\Auth — emails a password-reset link (POST /forgot-password).
+ * Core\Auth - emails a password-reset link (POST /forgot-password).
  */
 class SendPasswordResetLinkController extends Controller
 {

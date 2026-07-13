@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 /**
- * Core\DataTable — shared server-side table infrastructure.
+ * Core\DataTable - shared server-side table infrastructure.
  *
  * Pairs with resources/js/Core/Components/DataTable.vue. The Vue
  * component sends the query-string contract below; this builder applies
  * it to any Eloquent query. Core modules AND product Modules use the
- * same class — table behaviour is solved once, here.
+ * same class - table behaviour is solved once, here.
  *
  * Query-string contract:
  *   ?search=foo&sort=name&direction=desc&per_page=25&page=2
@@ -47,7 +47,7 @@ class DataTableBuilder
         return $this;
     }
 
-    /** Whitelist of columns the client may sort by — never trust raw input. */
+    /** Whitelist of columns the client may sort by - never trust raw input. */
     public function sortable(array $columns): self
     {
         $this->sortable = $columns;

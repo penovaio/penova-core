@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Core\Settings — persists edited settings (penova.settings.update).
+ * Core\Settings - persists edited settings (penova.settings.update).
  */
 class UpdateSettingsController extends Controller
 {

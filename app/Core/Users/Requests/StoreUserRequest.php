@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules;
 
 /**
- * Core\Users — validation for creating a user from the panel.
+ * Core\Users - validation for creating a user from the panel.
  * Authorization delegates to UserPolicy so there is one source of truth.
  */
 class StoreUserRequest extends FormRequest

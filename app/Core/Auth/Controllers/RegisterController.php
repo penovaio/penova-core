@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
 /**
- * Core\Auth — creates the account and logs the user in (POST /register).
+ * Core\Auth - creates the account and logs the user in (POST /register).
  * See ShowRegisterController for the opt-in registration notes.
  */
 class RegisterController extends Controller

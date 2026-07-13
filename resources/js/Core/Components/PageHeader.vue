@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — standard page heading used by every panel page:
+ * Core\UI - standard page heading used by every panel page:
  * title + optional subtitle on the left, an #actions slot for
  * buttons on the right. Keeps page tops consistent across Core
  * and future Module pages.

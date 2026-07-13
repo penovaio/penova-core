@@ -3,7 +3,7 @@
 namespace App\Core\Support;
 
 /**
- * Core\Support — the installed Modules' Manifest registry.
+ * Core\Support - the installed Modules' Manifest registry.
  *
  * The single source of truth for what every installed Module contributes.
  * It resolves config('penova.modules') exactly ONCE: each provider
@@ -12,9 +12,9 @@ namespace App\Core\Support;
  * adapted into a Manifest (one-way) with an E_USER_DEPRECATED signal;
  * providers implementing neither contribute nothing.
  *
- * Everything the Platform composes from Modules — the readable identity
+ * Everything the Platform composes from Modules - the readable identity
  * manifests (Workspace + future tooling), the sidebar menu items, the
- * widget descriptors, and the declared permission slugs — derives
+ * widget descriptors, and the declared permission slugs - derives
  * from this one resolved set, so the module list is never iterated in
  * parallel (D-023). Registered as a singleton by PenovaCoreServiceProvider.
  */
@@ -24,7 +24,7 @@ final class ManifestRegistry
     private array $manifests;
 
     /**
-     * Module key → its OWN frontend coordinate root (EXPERIMENTAL — RFC-006 /
+     * Module key → its OWN frontend coordinate root (EXPERIMENTAL - RFC-006 /
      * D-028). Read from the provider boundary, not the Manifest: it is module-owned
      * build/install metadata, never a Manifest contribution.
      *
@@ -33,7 +33,7 @@ final class ManifestRegistry
     private array $frontendSources = [];
 
     /**
-     * Module key → its declared frontend package pairing (EXPERIMENTAL — RFC-006 /
+     * Module key → its declared frontend package pairing (EXPERIMENTAL - RFC-006 /
      * D-028), for Modules whose provider implements {@see DeclaresFrontendPackage}.
      * Also read from the provider boundary, never the Manifest.
      *
@@ -99,7 +99,7 @@ final class ManifestRegistry
     }
 
     /**
-     * A Module's OWN frontend coordinate root (EXPERIMENTAL — RFC-006 / D-028) —
+     * A Module's OWN frontend coordinate root (EXPERIMENTAL - RFC-006 / D-028) -
      * module-owned build metadata read from the PROVIDER, never the Manifest. A
      * provider MAY declare it by implementing {@see DeclaresFrontendSource};
      * otherwise the in-repo default `@/Modules/{key}` is derived from the key.
@@ -115,7 +115,7 @@ final class ManifestRegistry
     }
 
     /**
-     * The installed Modules' identity manifests — the public JSON shape the
+     * The installed Modules' identity manifests - the public JSON shape the
      * Workspace and future tooling read.
      *
      * @return list<array{key: string, name: string, description: string, version: string}>
@@ -196,7 +196,7 @@ final class ManifestRegistry
 
     /**
      * The declared frontend PACKAGE pairings of the installed Modules that have one
-     * (EXPERIMENTAL — RFC-006 / D-028), for the pairing + peer checks. Read from
+     * (EXPERIMENTAL - RFC-006 / D-028), for the pairing + peer checks. Read from
      * the provider boundary; Modules that ship their frontend in-repo declare none
      * and are absent here. Names no specific Module.
      *

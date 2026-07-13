@@ -5,7 +5,7 @@ namespace App\Modules\{{ name }}\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Modules\{{ name }} — validation for creating a {{ entity }}.
+ * Modules\{{ name }} - validation for creating a {{ entity }}.
  */
 class Store{{ entity }}Request extends FormRequest
 {

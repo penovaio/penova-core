@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\Notifications — the user's notification feed. Any module's
+ * Core\Notifications - the user's notification feed. Any module's
  * database notifications appear here; "data.message" is the display
  * convention every notification class should follow.
  */

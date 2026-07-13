@@ -1,15 +1,15 @@
 <script setup>
 /**
- * Core\UI — the shared Workspace shell.
+ * Core\UI - the shared Workspace shell.
  *
  * Structure (RTL: <html dir="rtl"> flips flex automatically, so the
- * sidebar — first in the DOM — sits on the RIGHT):
+ * sidebar - first in the DOM - sits on the RIGHT):
  *   dark sidebar (brand + iconed nav) | white topbar / slate content
  *
  * The sidebar is data-driven: items come from the shared Inertia prop
  * `menu` (Core items + every module's menu() hook, merged and
  * order-sorted by PenovaCoreServiceProvider, hrefs resolved by
- * HandleInertiaRequests). Modules never fork this file — they add a
+ * HandleInertiaRequests). Modules never fork this file - they add a
  * menu entry from their service provider.
  *
  * Page anatomy (Core pages and Module pages alike):
@@ -53,7 +53,7 @@ const branding = computed(() => page.props.branding ?? {});
 
 const userMenuOpen = ref(false);
 
-// Sidebar items — the shared prop described in the docblock above.
+// Sidebar items - the shared prop described in the docblock above.
 const navigation = computed(() => page.props.menu ?? []);
 
 // Menu descriptors carry a string icon key (backend stays Vue-agnostic);

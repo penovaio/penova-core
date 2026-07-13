@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Auth — shows the login page (GET /login).
+ * Core\Auth - shows the login page (GET /login).
  *
  * Responsibility of the Auth module: authenticate users into the panel.
  * Products never duplicate this; they only theme the Inertia pages under

@@ -10,7 +10,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Logs — the read-only audit trail page (penova.logs.index).
+ * Core\Logs - the read-only audit trail page (penova.logs.index).
  */
 class ListActivityLogsController extends Controller
 {

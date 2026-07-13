@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — minimal dialog. Controlled via v-model:show.
+ * Core\UI - minimal dialog. Controlled via v-model:show.
  */
 defineProps({ show: Boolean, title: String });
 const emit = defineEmits(['close']);

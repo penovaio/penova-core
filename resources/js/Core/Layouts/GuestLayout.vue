@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — centered-card layout for guest pages (login, register,
+ * Core\UI - centered-card layout for guest pages (login, register,
  * password reset).
  *
  * Structure: full-height slate canvas → white card (brand title at the
@@ -33,7 +33,7 @@ const { t } = useI18n();
         </div>
 
         <footer class="mt-6 text-xs text-slate-400">
-            © {{ appName }} – {{ t('shell.guest_footer') }}
+            © {{ appName }} - {{ t('shell.guest_footer') }}
         </footer>
     </div>
 </template>

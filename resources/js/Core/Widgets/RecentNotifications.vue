@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core widget — the user's latest notifications
+ * Core widget - the user's latest notifications
  * (key "core-recent-notifications"). Full feed: /admin/notifications.
  */
 import { computed } from 'vue';

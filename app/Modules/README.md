@@ -1,14 +1,14 @@
-# app/Modules — Product Modules
+# app/Modules - Product Modules
 
 Business-specific products (CRM, CMS, …) live here, one folder
-per module. **Core never imports from this namespace** — modules build on
+per module. **Core never imports from this namespace** - modules build on
 Core, not the other way around. If code is reusable across two modules,
 it belongs in `app/Core`.
 
 Core ships with **no bundled business module**; this guide uses a
 hypothetical `Blog` module as its worked example.
 
-Start a new module with the scaffolder — it creates the whole anatomy
+Start a new module with the scaffolder - it creates the whole anatomy
 below (provider implementing the contract, routes.php, backend and
 frontend folders) from `stubs/penova/module/`:
 
@@ -40,7 +40,7 @@ resources/js/Modules/Blog/
   Components/  ← module-private components (e.g. a shared form)
 ```
 
-> **⚠ EXPERIMENTAL — the module-frontend seam (RFC-006 / D-028).** The frontend
+> **⚠ EXPERIMENTAL - the module-frontend seam (RFC-006 / D-028).** The frontend
 > half of the Core↔module seam is now a **declared contract, but an experimental
 > one**: it may change or be withdrawn **without a MAJOR bump**, and is not yet
 > SemVer-frozen. It graduates to a stable, SemVer-governed contract only once a
@@ -50,7 +50,7 @@ resources/js/Modules/Blog/
 A module no longer relies on an automatic path glob. Instead it **declares** its
 frontend contributions, and a **generated, git-ignored registry** resolves them:
 
-1. **Declare the entries** in the Manifest's experimental `frontend` section —
+1. **Declare the entries** in the Manifest's experimental `frontend` section -
    typed `entry` tokens (never paths or globs), joined to widgets by `key` and to
    pages by their Inertia `name`:
 
@@ -67,12 +67,12 @@ frontend contributions, and a **generated, git-ignored registry** resolves them:
 
    Every enabled backend widget needs exactly one frontend entry with the same
    `key` (no missing entry, no orphan); page `name`s must be globally unique and
-   must not start with `Core/`. The `entry` token is module-internal — no `..`, no
+   must not start with `Core/`. The `entry` token is module-internal - no `..`, no
    leading/trailing slash.
 
 2. **Own the coordinate.** Where the frontend physically lives is *module* build
    metadata, not a Manifest field. `@/Modules/{key}` is only the **optional default
-   convention** — not a guaranteed Core coordinate (D-AUDIT-008); the governed
+   convention** - not a guaranteed Core coordinate (D-AUDIT-008); the governed
    surfaces are the Manifest `frontend` descriptor and
    `App\Core\Support\DeclaresFrontendSource`. An in-repo module gets that default; a
    module whose directory differs from its key (or that ships its frontend
@@ -85,7 +85,7 @@ frontend contributions, and a **generated, git-ignored registry** resolves them:
    }
    ```
 
-3. **Regenerate the registry** — one command, run automatically by every frontend
+3. **Regenerate the registry** - one command, run automatically by every frontend
    build (`npm run build` / `npm run dev` invoke it first):
 
    ```
@@ -97,7 +97,7 @@ frontend contributions, and a **generated, git-ignored registry** resolves them:
    of a module. `--check` fails a build whose registry is missing, tampered, or
    stale. Malformed descriptors, a broken widget join, duplicate contributions,
    an unknown widget area, or an unresolvable entry all fail **loudly** at
-   generation — never silently at runtime.
+   generation - never silently at runtime.
 
 **Externally-packaged modules (forward-looking).** A module whose frontend ships
 as its own package may also implement `App\Core\Support\DeclaresFrontendPackage`
@@ -109,13 +109,13 @@ declare none.
 > **Still internal, even so.** The shared Inertia prop shapes (`menu`, `widgets`,
 > `widgetAreas`) and the Core layout/components a module imports (e.g.
 > `WorkspaceLayout`) remain **Core internals that may change between releases**.
-> The governed public contract is the **Manifest** — its section shapes (D-023),
-> now including the experimental `frontend` descriptor — *not* the props or Core
+> The governed public contract is the **Manifest** - its section shapes (D-023),
+> now including the experimental `frontend` descriptor - *not* the props or Core
 > component names derived from them.
 
 ## Wiring a module in
 
-Add its provider to `config/penova.php` — the **only** place a module
+Add its provider to `config/penova.php` - the **only** place a module
 touches shared configuration:
 
 ```php
@@ -124,20 +124,20 @@ touches shared configuration:
 ],
 ```
 
-`PenovaCoreServiceProvider` registers it — Core stays free of any
+`PenovaCoreServiceProvider` registers it - Core stays free of any
 compile-time reference to the module.
 
 ## The module contract (`App\Core\Support\PenovaModule`)
 
 Every module's service provider extends Laravel's `ServiceProvider`
 **and implements `PenovaModule`**. A module declares everything it
-contributes — identity, menu, widgets, permissions — through **one
+contributes - identity, menu, widgets, permissions - through **one
 Manifest**, its single coherent declaration (D-005; *Manifest* in the
 Glossary). Core reads the Manifest only from providers implementing the
-interface — a provider without it still boots, but contributes nothing to
+interface - a provider without it still boots, but contributes nothing to
 the panel. Sections a module does not use are simply omitted.
 
-Routes and migrations are **not** Manifest contributions — they are
+Routes and migrations are **not** Manifest contributions - they are
 ordinary provider mechanics, wired in `boot()` (see *Routes* below).
 
 ```php
@@ -157,45 +157,45 @@ class BlogServiceProvider extends ServiceProvider implements PenovaModule
             description: 'Posts and publishing.',
             version: '0.1.0',
         )
-            ->menu([ /* sidebar items — see below */ ])
-            ->widgets([ /* widgets — see below */ ])
-            ->permissions([ /* permission slugs — see below */ ]);
+            ->menu([ /* sidebar items - see below */ ])
+            ->widgets([ /* widgets - see below */ ])
+            ->permissions([ /* permission slugs - see below */ ]);
     }
 }
 ```
 
-The Manifest is built once, fluently, then read — a declaration, not a
+The Manifest is built once, fluently, then read - a declaration, not a
 mutable object. Each section's item shape is documented below.
 
-### The `menu` section — sidebar items
+### The `menu` section - sidebar items
 
-An array of items; Core merges them with its own (orders 10–60) and sorts
+An array of items; Core merges them with its own (orders 10-60) and sorts
 by `order`. Use `order >= 100` for module items.
 
 ```php
 ->menu([[
     'key'   => 'blog',           // unique across the panel
     'label' => 'Blog',
-    'route' => 'blog.posts.index', // route NAME — Core resolves the URL
+    'route' => 'blog.posts.index', // route NAME - Core resolves the URL
     'icon'  => 'clipboard',      // icon key; the map lives in WorkspaceLayout.vue
                                  // (home|users|shield|cog|clock|bell|calendar|bag|clipboard|sparkles|squares)
     'order' => 100,
     'permission' => 'blog.view', // optional; hides the item from users
-                                    // without the permission — keep it in
+                                    // without the permission - keep it in
                                     // sync with the route's middleware
 ]])
 ```
 
-### The `widgets` section — widgets
+### The `widgets` section - widgets
 
 > **v1: the widget grid is dormant (D-AUDIT-007).** The `widgets` descriptor is a
 > valid Manifest section you may declare, but Core v1 does **not** render a
-> user-visible widget grid or dashboard — the widget pipeline is internal and
+> user-visible widget grid or dashboard - the widget pipeline is internal and
 > dormant. Declaring widgets is safe and forward-looking; do not rely on a live
 > grid until Penova declares a Workspace-widget contract through a dedicated RFC.
 
 Widget **descriptors** carry a widget's placement; when a widget grid is enabled it
-positions them sorted by `order`. Core's own widgets use orders 10–30 (and 900 for
+positions them sorted by `order`. Core's own widgets use orders 10-30 (and 900 for
 the Modules card), so modules land in the middle with `order >= 100`.
 
 ```php
@@ -213,7 +213,7 @@ the Modules card), so modules land in the middle with `order >= 100`.
 ```
 
 The widget descriptor carries the widget's **placement** (area, title, order,
-permission) — its single authority. The Vue component it renders is declared
+permission) - its single authority. The Vue component it renders is declared
 separately, in the experimental `frontend` section, and joined by the shared
 `key` (see *Anatomy of a module* above). There is no `component` path field.
 
@@ -222,7 +222,7 @@ module's widgets stay visually grouped. Recommended: give your module its
 own area named after it (`'area' => 'blog'`) and reuse it on every
 widget the module ships. Omitting `area` drops the widget into the
 default `core` group. Section headings come from
-`config('penova.widgets.areas')` — add your key there for a proper label;
+`config('penova.widgets.areas')` - add your key there for a proper label;
 unknown keys fall back to a label formatted from the key itself
 (`blog-extras` → "Blog Extras").
 
@@ -231,7 +231,7 @@ its descriptor as the `widget` prop and owns its data: read the shared /
 page Inertia props, or fetch a small module JSON endpoint on mount (see
 `RecentPostsCard.vue` + `RecentPostsCountController`).
 
-### The `permissions` section — declared permission slugs
+### The `permissions` section - declared permission slugs
 
 The flat list of permission slugs the module introduces:
 
@@ -241,13 +241,13 @@ The flat list of permission slugs the module introduces:
 
 This section is the module's **single declaration** of the permissions it
 introduces (D-023): Core collects it into the `penova.permissions` binding,
-and the module's seeder *reads* it to create the permissions — so the slug
+and the module's seeder *reads* it to create the permissions - so the slug
 set lives in one place, not several. Keep the route middleware's
 `permission:` guards in sync with what you declare here.
 
 ## Permissions
 
-Guard module routes with the permission middleware, split by intent —
+Guard module routes with the permission middleware, split by intent -
 `*.view` for read-only pages (index, widget data endpoints), `*.manage`
 for create/edit actions:
 
@@ -266,7 +266,7 @@ never show what the routes would 403.
 
 ## Routes: invokable controllers only
 
-Every route action — Core and Modules alike — is **one invokable
+Every route action - Core and Modules alike - is **one invokable
 controller class**. Naming convention: `{Verb}{Subject}Controller`, verbs
 from this set:
 
@@ -280,8 +280,8 @@ from this set:
 | Update  | apply edits                  | `UpdatePostController`  |
 | Delete  | destroy                      | `DeletePostController`  |
 
-(`{Subject}{Verb}Controller` — `PostIndexController`,
-`PostShowController` — is an accepted equivalent; pick one style per
+(`{Subject}{Verb}Controller` - `PostIndexController`,
+`PostShowController` - is an accepted equivalent; pick one style per
 module and stay consistent.) Widget data endpoints follow the same rule:
 `RecentPostsCountController`.
 
@@ -309,11 +309,11 @@ captured by route-model binding.
 The Manifest grows by adding a **section**, never another top-level hook
 (D-023). Planned:
 
-- `policies` — modules announcing their model → policy map so Core
+- `policies` - modules announcing their model → policy map so Core
   registers Gates for them.
-- `settings` — modules registering their runtime settings (key, default,
+- `settings` - modules registering their runtime settings (key, default,
   label) into the Core Settings page.
-- `logs` — declaring module activity-log actions for nicer rendering in
+- `logs` - declaring module activity-log actions for nicer rendering in
   the Core audit trail.
 
 Do not pre-declare these; they will be added to the Manifest as optional

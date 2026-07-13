@@ -1,8 +1,8 @@
 <script setup>
 /**
- * Core\UI — Workspace hero. First thing an admin sees after install: the
+ * Core\UI - Workspace hero. First thing an admin sees after install: the
  * product's name, current version, and the three outbound links that keep
- * them oriented (docs / source / release notes). Status only — no actions
+ * them oriented (docs / source / release notes). Status only - no actions
  * live here, that's SetupProgress and GetStartedActions below.
  */
 import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline';

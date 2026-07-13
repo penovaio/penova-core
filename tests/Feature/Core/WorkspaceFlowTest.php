@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Core — the "Workspace experience" system test
+| Core - the "Workspace experience" system test
 |--------------------------------------------------------------------------
 | This is the end-to-end contract of Penova Core and must ALWAYS be
 | green: a fresh database is migrated and seeded, the seeded Operator logs
@@ -32,7 +32,7 @@ test('the full Workspace experience works end to end', function () {
 
     // 3) The workspace renders its Inertia page, with the panel
     //    composition props shared by HandleInertiaRequests: the sidebar
-    //    menu (Core items first — lowest order — plus module items) and
+    //    menu (Core items first - lowest order - plus module items) and
     //    the widget descriptors (Core + modules, order-sorted).
     $this->get(route('penova.workspace'))
         ->assertOk()
@@ -79,7 +79,7 @@ test('the full Workspace experience works end to end', function () {
 
 test('Core ships with no business module enabled by default (D-026)', function () {
     // Core is complete on its own: the modules default is empty, so the
-    // Workspace composition carries only Core contributions — no module menu
+    // Workspace composition carries only Core contributions - no module menu
     // items or widgets.
     expect(config('penova.modules'))->toBe([]);
 
@@ -104,7 +104,7 @@ test('login returns the guest to the originally-requested Workspace URL (generic
     $this->get(route('penova.users.index'))->assertRedirect(route('login'));
 
     // After login the framework-generic intended() redirect returns them
-    // there — Core auth carries no module/checkout-specific handling (D-026).
+    // there - Core auth carries no module/checkout-specific handling (D-026).
     $this->post('/login', [
         'email' => config('penova.operator.email'),
         'password' => config('penova.operator.password'),

@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\Users — user list, the reference implementation of the
+ * Core\Users - user list, the reference implementation of the
  * DataTable pattern every future module table copies.
  */
 import { Link, router } from '@inertiajs/vue3';

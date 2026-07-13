@@ -1,8 +1,8 @@
 <script setup>
 /**
- * Core\UI — Workspace platform health. Reads PlatformHealth::check() (Task
+ * Core\UI - Workspace platform health. Reads PlatformHealth::check() (Task
  * 2): five cheap subsystem probes reported Ready/Warning only. A compact
- * list, not a chart — a single degraded row should read at a glance, not
+ * list, not a chart - a single degraded row should read at a glance, not
  * demand analysis.
  */
 import { CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline';

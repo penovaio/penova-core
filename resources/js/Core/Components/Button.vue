@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — the one button. Variants cover the whole panel; Modules
+ * Core\UI - the one button. Variants cover the whole panel; Modules
  * use this instead of styling their own.
  *
  * With `href` it renders as an Inertia <Link> styled identically,

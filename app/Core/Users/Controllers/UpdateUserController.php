@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Core\Users — applies edits to a user (penova.users.update).
+ * Core\Users - applies edits to a user (penova.users.update).
  * Authorization lives in UpdateUserRequest + the users.manage route
  * middleware; see ListUsersController for the module-wide notes.
  */

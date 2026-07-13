@@ -10,7 +10,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Users — the users index page (penova.users.index).
+ * Core\Users - the users index page (penova.users.index).
  *
  * One invokable class per route action is the panel-wide convention
  * (Core and Modules alike); shared context for the Users module lives

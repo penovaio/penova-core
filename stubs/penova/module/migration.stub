@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Modules\{{ name }} — the {{ table }} table (scaffolded starting
+ * Modules\{{ name }} - the {{ table }} table (scaffolded starting
  * point). Loaded via loadMigrationsFrom() in {{ name }}ServiceProvider.
  */
 return new class extends Migration

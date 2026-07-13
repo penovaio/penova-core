@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * Core\Logs — single entry point for writing audit entries.
+ * Core\Logs - single entry point for writing audit entries.
  *
  * Direct use:
  *   app(ActivityLogger::class)->log('booking.confirmed', $booking);
  *
  * Automatic use: add the RecordsActivity trait
- * (App\Core\Support\Traits\RecordsActivity) to any model — Core or
- * Module — and created/updated/deleted are logged for you.
+ * (App\Core\Support\Traits\RecordsActivity) to any model - Core or
+ * Module - and created/updated/deleted are logged for you.
  */
 class ActivityLogger
 {

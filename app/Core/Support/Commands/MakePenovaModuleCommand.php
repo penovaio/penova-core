@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 /**
- * Core\Support — `penova:module {name}`.
+ * Core\Support - `penova:module {name}`.
  *
  * Scaffolds a new product module following the PenovaModule contract,
  * with a WORKING Index/Create/Store CRUD out of the box: service
@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
  * str_replace, no Blade):
  *
  *   {{ name }}   → StudlyCase module name          (Reports)
- *   {{ module }} → kebab-case module key           (reports) — route
+ *   {{ module }} → kebab-case module key           (reports) - route
  *                  names, permission slugs, widget area
  *   {{ entity }} → singular StudlyCase model name  (Report)
  *   {{ table }}  → plural snake_case table name    (reports)

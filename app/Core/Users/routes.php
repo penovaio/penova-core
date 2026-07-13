@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | Core\Users Routes
 |--------------------------------------------------------------------------
 | Loaded by routes/penova.php inside the admin group.
-| Route names resolve to penova.users.* — one invokable controller per
+| Route names resolve to penova.users.* - one invokable controller per
 | action (the panel-wide convention).
 */
 

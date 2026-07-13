@@ -19,7 +19,7 @@ beforeEach(function () {
     $this->registry = new ManifestRegistry();
 });
 
-test('Core reads the provider-owned coordinate generically — distinct from the in-repo default', function () {
+test('Core reads the provider-owned coordinate generically - distinct from the in-repo default', function () {
     $modules = $this->registry->frontendModules();
 
     expect($modules)->toHaveCount(1);
@@ -45,7 +45,7 @@ test('the declared package pairing surfaces through the provider boundary and pa
         'package' => ['name' => '@acme/catalog-frontend', 'version' => '^1.0', 'peers' => ['vue' => '^3.5', '@inertiajs/vue3' => '^2.0']],
     ]]);
 
-    // Passes (no throw) — a matched package with compatible peers.
+    // Passes (no throw) - a matched package with compatible peers.
     FrontendPackageCheck::verify(
         $packages,
         ['@acme/catalog-frontend' => '1.4.0'],

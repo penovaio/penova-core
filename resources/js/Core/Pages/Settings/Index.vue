@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\Settings — generic key-value editor plus the White Label / Branding
+ * Core\Settings - generic key-value editor plus the White Label / Branding
  * group. Branding binds to raw DB values (empty when unset); config defaults
  * only surface at the display layer via the shared `branding` prop.
  */

@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Auth — shows the self-registration page (GET /register).
+ * Core\Auth - shows the self-registration page (GET /register).
  *
  * Only routed when config('penova.auth.registration') is true; products
  * toggle it via PENOVA_REGISTRATION in .env (see routes.php).

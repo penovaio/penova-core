@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — base card for widgets: title + optional icon
+ * Core\UI - base card for widgets: title + optional icon
  * badge + value, with loading/error states handled once for every
  * widget. The 90% case is props-only:
  *
@@ -8,7 +8,7 @@
  *                  :loading="loading" :error="error">زیرنویس</WidgetCard>
  *
  * No trend logic here (by design, for now): widgets needing richer
- * visuals override the slots instead of forking the card —
+ * visuals override the slots instead of forking the card -
  *   #icon  → replaces the whole badge (e.g. trend-colored)
  *   #value → replaces the value block (e.g. colored count + delta line)
  *   default→ small muted footer line (subtitle / hint)
@@ -27,7 +27,7 @@ import {
 
 const props = defineProps({
     title: { type: String, required: true },
-    // Icon key — same string convention as menu/widget descriptors
+    // Icon key - same string convention as menu/widget descriptors
     // (calendar|users|bell|clock|chart|squares). Unknown keys fall back
     // to the squares icon; the #icon slot overrides the badge entirely.
     icon: { type: String, default: null },

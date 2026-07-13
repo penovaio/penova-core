@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * {{ name }} — <one line: what this module does>.
+ * {{ name }} - <one line: what this module does>.
  *
  * Scaffolded by `php artisan penova:module {{ name }}` with a working
  * Index/Create/Store CRUD for the {{ entity }} model. A module declares
@@ -48,11 +48,11 @@ class {{ name }}ServiceProvider extends ServiceProvider implements DeclaresFront
     }
 
     /**
-     * The module's single Manifest — its complete declaration of what it
+     * The module's single Manifest - its complete declaration of what it
      * contributes to the Platform: identity, menu, widgets, permissions.
      *
      * NOTE: the menu item stays HIDDEN until the '{{ module }}.view'
-     * permission is seeded and granted — register {{ name }}PermissionsSeeder
+     * permission is seeded and granted - register {{ name }}PermissionsSeeder
      * (Database/Seeders) in database/seeders/DatabaseSeeder.php and run
      * `php artisan db:seed`. Icon keys map in
      * resources/js/Core/Layouts/WorkspaceLayout.vue
@@ -77,10 +77,10 @@ class {{ name }}ServiceProvider extends ServiceProvider implements DeclaresFront
                 ],
             ])
             // Every Module page Core renders MUST be declared here as a typed
-            // {name, entry} pair (EXPERIMENTAL frontend seam — RFC-006 / D-028); the
+            // {name, entry} pair (EXPERIMENTAL frontend seam - RFC-006 / D-028); the
             // entry resolves against this Module's coordinate (frontendSource()
             // below). To add a widget: declare its descriptor in ->widgets([...])
-            // AND a paired {key, entry} under 'widgets' here — see app/Modules/README.md.
+            // AND a paired {key, entry} under 'widgets' here - see app/Modules/README.md.
             ->frontend([
                 'pages' => [
                     ['name' => 'Modules/{{ name }}/Index', 'entry' => 'Pages/Index'],
@@ -94,10 +94,10 @@ class {{ name }}ServiceProvider extends ServiceProvider implements DeclaresFront
     }
 
     /**
-     * This Module's OWN frontend coordinate root (EXPERIMENTAL — RFC-006 / D-028):
+     * This Module's OWN frontend coordinate root (EXPERIMENTAL - RFC-006 / D-028):
      * where its Vue frontend lives. Declared explicitly because the Module key
      * ('{{ module }}', kebab-case) differs from the frontend directory
-     * ('{{ name }}', StudlyCase) — the default key-based coordinate would not
+     * ('{{ name }}', StudlyCase) - the default key-based coordinate would not
      * resolve on a case-sensitive filesystem. Module-owned build metadata, never a
      * Manifest field.
      */

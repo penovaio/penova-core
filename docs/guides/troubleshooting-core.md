@@ -45,7 +45,7 @@ works with zero database setup. If you want MySQL instead:
 
 1. In `.env`, set `DB_CONNECTION=mysql` and the `DB_HOST` / `DB_PORT` /
    `DB_DATABASE` / `DB_USERNAME` / `DB_PASSWORD` values.
-2. Create the database first — Laravel does not create it for you.
+2. Create the database first - Laravel does not create it for you.
 3. Re-run `php artisan penova:install` (or `php artisan migrate --seed`).
 
 If you switched connections after already migrating on SQLite, start clean with

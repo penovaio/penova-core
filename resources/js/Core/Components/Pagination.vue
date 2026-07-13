@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — renders Laravel paginator links (the "links" array that
+ * Core\UI - renders Laravel paginator links (the "links" array that
  * LengthAwarePaginator serializes for Inertia).
  */
 import { Link } from '@inertiajs/vue3';

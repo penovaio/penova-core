@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Auth — shows the "forgot password" page (GET /forgot-password).
+ * Core\Auth - shows the "forgot password" page (GET /forgot-password).
  */
 class ShowForgotPasswordController extends Controller
 {

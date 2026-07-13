@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Core\Settings — grouped key-value runtime settings.
+ * Core\Settings - grouped key-value runtime settings.
  */
 return new class extends Migration
 {

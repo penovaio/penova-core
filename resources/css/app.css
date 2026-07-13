@@ -8,11 +8,11 @@
 
 /*
 |--------------------------------------------------------------------------
-| Yekan Bakh (FaNum) — the Persian presentation typeface
+| Yekan Bakh (FaNum) - the Persian presentation typeface
 |--------------------------------------------------------------------------
 | Served from public/fonts/Yekan-Bakh. The FaNum cut renders Persian
 | numerals. It is applied ONLY under the Persian locale (see the
-| html[lang="fa"] rule below), never as a global default — Core's default
+| html[lang="fa"] rule below), never as a global default - Core's default
 | presentation is locale-neutral (RFC-005 / D-027).
 */
 @font-face {
@@ -47,7 +47,7 @@
 |   This is the default for every locale; the Persian face is layered on
 |   top only under html[lang="fa"] (RFC-005 / D-027).
 | --font-yekan: explicit Persian (Yekan Bakh) alias, usable as `font-yekan`.
-| --color-brand: the Penova red — generates bg-brand, text-brand,
+| --color-brand: the Penova red - generates bg-brand, text-brand,
 |   ring-brand, … `brand-hover` is the pressed/hover shade.
 */
 @theme {
@@ -58,7 +58,7 @@
     --color-brand: #ff4431;
     --color-brand-hover: #e63a29;
 
-    /* Secondary accent — blue */
+    /* Secondary accent - blue */
     --color-accent: #2596be;
     --color-accent-hover: #1f80a3;
     --color-accent-light: #7cc3dd;
@@ -78,19 +78,19 @@
 }
 
 /*
-| Persian presentation layer (RFC-005 / D-027) — the Yekan Bakh (FaNum)
+| Persian presentation layer (RFC-005 / D-027) - the Yekan Bakh (FaNum)
 | face applies ONLY when the active locale is Persian. The <html lang>
 | attribute is locale-driven (resources/views/app.blade.php), so any non-fa
 | install keeps the neutral base font and Latin numerals. Written unlayered
 | so it wins over the `font-sans` utility on <body> regardless of Tailwind's
-| layer order; presentation only — no number/date formatting machinery.
+| layer order; presentation only - no number/date formatting machinery.
 */
 html[lang="fa"] body {
     font-family: var(--font-yekan);
 }
 
 /*
-| Direction baseline — the <html> element's dir follows the active locale
+| Direction baseline - the <html> element's dir follows the active locale
 | (resources/views/app.blade.php): rtl for Persian, ltr by default. Flex/grid
 | and logical utilities (ms-*, me-*, start-*, end-*, text-start) follow that
 | attribute automatically, so no locale hardcodes a direction here.
@@ -103,7 +103,7 @@ html[lang="fa"] body {
     /* Text-entry controls already show a single brand-colored focus ring
        (focus:ring-brand, a box-shadow); suppress the browser's native
        outline so it doesn't double up with a second, slate-ish border.
-       Checkboxes/radios are excluded — they carry no ring, so the native
+       Checkboxes/radios are excluded - they carry no ring, so the native
        outline is their only focus indicator (keyboard a11y, WCAG 2.4.7). */
     input:not([type='checkbox']):not([type='radio']):focus,
     textarea:focus,

@@ -8,7 +8,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Notifications — the user's notification feed page
+ * Core\Notifications - the user's notification feed page
  * (penova.notifications.index).
  *
  * Uses Laravel's native database notification channel (the standard

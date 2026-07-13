@@ -7,7 +7,7 @@ import { usePage } from '@inertiajs/vue3';
  * HandleInertiaRequests shares the active locale's `ui` messages with the
  * English base already merged under them, so a missing translation falls
  * back to English. This composable only looks a dot-path key up in that
- * payload and interpolates `:param` placeholders — no front-end i18n
+ * payload and interpolates `:param` placeholders - no front-end i18n
  * framework, no second translation authority.
  */
 export function useI18n() {

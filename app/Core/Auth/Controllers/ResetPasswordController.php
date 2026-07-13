@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 
 /**
- * Core\Auth — validates the token and sets the new password
+ * Core\Auth - validates the token and sets the new password
  * (POST /reset-password).
  */
 class ResetPasswordController extends Controller

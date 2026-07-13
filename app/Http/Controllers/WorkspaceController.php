@@ -12,11 +12,11 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * The Workspace — the post-install onboarding screen at the Workspace root.
+ * The Workspace - the post-install onboarding screen at the Workspace root.
  *
  * Assembles one first-class `platform` view-model (status only; navigation
  * stays the separate shared `menu` prop). Onboarding, installed modules,
- * health and What's New drive time-to-first-product — not statistics.
+ * health and What's New drive time-to-first-product - not statistics.
  */
 class WorkspaceController extends Controller
 {
@@ -37,7 +37,7 @@ class WorkspaceController extends Controller
 
                 // Onboarding copy is resolved to the active locale via __()
                 // against the ui.home.onboarding catalog (RFC-005 / D-027 /
-                // D-AUDIT-006) — English base, Persian under APP_LOCALE=fa — so the
+                // D-AUDIT-006) - English base, Persian under APP_LOCALE=fa - so the
                 // Workspace home is not English-hardcoded. Step keys stay stable
                 // identifiers; only labels/descriptions/CTAs are localized.
                 'onboarding' => [

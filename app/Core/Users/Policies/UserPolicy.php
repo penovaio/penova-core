@@ -5,11 +5,11 @@ namespace App\Core\Users\Policies;
 use App\Core\Users\Models\User;
 
 /**
- * Core\Users — authorization for user administration.
+ * Core\Users - authorization for user administration.
  *
  * Checks go through the "users.manage" permission (not a hard-coded
  * role): the seeded "admin" role owns that permission, so in practice
- * only admins manage users — but products can grant it to other roles
+ * only admins manage users - but products can grant it to other roles
  * without code changes.
  *
  * Advanced authorization stays out of Core (a Module or a replacement

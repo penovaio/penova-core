@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — basic content container: rounded, light shadow, padding.
+ * Core\UI - basic content container: rounded, light shadow, padding.
  * Optional #title slot (or title prop) above the default slot.
  */
 defineProps({

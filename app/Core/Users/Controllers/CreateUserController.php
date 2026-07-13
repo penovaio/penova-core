@@ -9,7 +9,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Users — the "new user" form page (penova.users.create).
+ * Core\Users - the "new user" form page (penova.users.create).
  * See ListUsersController for the module-wide authorization notes.
  */
 class CreateUserController extends Controller

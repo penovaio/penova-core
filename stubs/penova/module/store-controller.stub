@@ -8,7 +8,7 @@ use App\Modules\{{ name }}\Requests\Store{{ entity }}Request;
 use Illuminate\Http\RedirectResponse;
 
 /**
- * Modules\{{ name }} — persists a new {{ entity }} ({{ module }}.store).
+ * Modules\{{ name }} - persists a new {{ entity }} ({{ module }}.store).
  */
 class {{ name }}StoreController extends Controller
 {

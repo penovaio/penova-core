@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Core\Logs — audit trail. Rows are immutable (no updated_at).
+ * Core\Logs - audit trail. Rows are immutable (no updated_at).
  */
 return new class extends Migration
 {

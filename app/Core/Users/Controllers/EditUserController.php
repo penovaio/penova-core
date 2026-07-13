@@ -9,7 +9,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 
 /**
- * Core\Users — the "edit user" form page (penova.users.edit).
+ * Core\Users - the "edit user" form page (penova.users.edit).
  * See ListUsersController for the module-wide authorization notes.
  */
 class EditUserController extends Controller

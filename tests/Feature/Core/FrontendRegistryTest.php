@@ -3,10 +3,10 @@
 use App\Core\Support\FrontendRegistry;
 
 /**
- * Combined P2/P3 — the EXPERIMENTAL module-frontend registry generator
+ * Combined P2/P3 - the EXPERIMENTAL module-frontend registry generator
  * (RFC-006 / D-028): module-owned source coordinate, deterministic output, and
  * the full loud named-failure taxonomy. The registry is a git-ignored build
- * artifact — these tests exercise the generator directly with a sample module.
+ * artifact - these tests exercise the generator directly with a sample module.
  */
 
 function sampleModule(array $overrides = []): array
@@ -31,7 +31,7 @@ test('build maps contributions to specifiers from each Module OWN coordinate', f
     ]);
 });
 
-test('build is deterministic — identical inputs render byte-for-byte identical, sorted output', function () {
+test('build is deterministic - identical inputs render byte-for-byte identical, sorted output', function () {
     $modules = [sampleModule()];
     expect(FrontendRegistry::render(FrontendRegistry::build($modules)))
         ->toBe(FrontendRegistry::render(FrontendRegistry::build($modules)));
@@ -45,7 +45,7 @@ test('a fully paired module with a passing resolver builds cleanly', function ()
 
 // --- Named failure taxonomy: one negative per category (all loud) ---
 
-test('duplicate contribution — widget key across Modules', function () {
+test('duplicate contribution - widget key across Modules', function () {
     FrontendRegistry::build([
         sampleModule(),
         sampleModule(['key' => 'other', 'source' => '@/Modules/Other', 'frontend' => [
@@ -53,9 +53,9 @@ test('duplicate contribution — widget key across Modules', function () {
             'pages' => [],
         ], 'widgets' => [['key' => 'blog-recent-posts', 'area' => 'x']]]),
     ]);
-})->throws(InvalidArgumentException::class, 'duplicate contribution — widget key [blog-recent-posts]');
+})->throws(InvalidArgumentException::class, 'duplicate contribution - widget key [blog-recent-posts]');
 
-test('duplicate contribution — page name across Modules', function () {
+test('duplicate contribution - page name across Modules', function () {
     FrontendRegistry::build([
         sampleModule(),
         sampleModule(['key' => 'other', 'source' => '@/Modules/Other', 'widgets' => [], 'frontend' => [
@@ -63,31 +63,31 @@ test('duplicate contribution — page name across Modules', function () {
             'pages' => [['name' => 'Modules/Blog/Posts/Index', 'entry' => 'Pages/X']],
         ]]),
     ]);
-})->throws(InvalidArgumentException::class, 'duplicate contribution — page name [Modules/Blog/Posts/Index]');
+})->throws(InvalidArgumentException::class, 'duplicate contribution - page name [Modules/Blog/Posts/Index]');
 
-test('duplicate contribution — a page name in the reserved Core namespace', function () {
+test('duplicate contribution - a page name in the reserved Core namespace', function () {
     FrontendRegistry::build([sampleModule(['widgets' => [], 'frontend' => [
         'widgets' => [],
         'pages' => [['name' => 'Core/Users/Index', 'entry' => 'Pages/X']],
     ]])]);
 })->throws(InvalidArgumentException::class, 'collides with the reserved Core namespace');
 
-test('missing frontend entry — a backend widget with no frontend contribution', function () {
+test('missing frontend entry - a backend widget with no frontend contribution', function () {
     FrontendRegistry::build([sampleModule(['frontend' => ['widgets' => [], 'pages' => []]])]);
-})->throws(InvalidArgumentException::class, 'missing frontend entry — backend widget [blog-recent-posts]');
+})->throws(InvalidArgumentException::class, 'missing frontend entry - backend widget [blog-recent-posts]');
 
-test('orphan frontend widget — a frontend widget with no backend declaration', function () {
+test('orphan frontend widget - a frontend widget with no backend declaration', function () {
     FrontendRegistry::build([sampleModule(['widgets' => [], 'frontend' => [
         'widgets' => [['key' => 'ghost', 'entry' => 'Widgets/Ghost']],
         'pages' => [],
     ]])]);
-})->throws(InvalidArgumentException::class, 'orphan frontend widget — frontend widget [ghost]');
+})->throws(InvalidArgumentException::class, 'orphan frontend widget - frontend widget [ghost]');
 
-test('unknown target area — a backend widget declares an empty area', function () {
+test('unknown target area - a backend widget declares an empty area', function () {
     FrontendRegistry::build([sampleModule(['widgets' => [['key' => 'blog-recent-posts', 'area' => '']]])]);
-})->throws(InvalidArgumentException::class, 'unknown target area — backend widget [blog-recent-posts]');
+})->throws(InvalidArgumentException::class, 'unknown target area - backend widget [blog-recent-posts]');
 
-test('unresolved entry — an entry that does not resolve through its coordinate', function () {
+test('unresolved entry - an entry that does not resolve through its coordinate', function () {
     FrontendRegistry::build([sampleModule()], fn (string $s) => false);
 })->throws(InvalidArgumentException::class, 'unresolved entry');
 

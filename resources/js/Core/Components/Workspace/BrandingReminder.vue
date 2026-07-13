@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — Workspace branding reminder. Surfaces above the fold whenever
+ * Core\UI - Workspace branding reminder. Surfaces above the fold whenever
  * the panel is still shipping Penova's own default branding, so nobody
  * accidentally ships a client product looking like the vendor's demo.
  * Dismissal is a client-only preference (localStorage), not server state.

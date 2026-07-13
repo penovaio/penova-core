@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * Core\Logs — one audit entry: who did what to which record.
+ * Core\Logs - one audit entry: who did what to which record.
  */
 class ActivityLog extends Model
 {

@@ -7,14 +7,14 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * Core\Settings — cached read/write access to runtime settings.
+ * Core\Settings - cached read/write access to runtime settings.
  *
  * Two configuration layers, by design:
  *   - config/penova.php  → deploy-time, developer-owned, in git
  *   - SettingsManager    → runtime, admin-owned, in the database
  *
  * Registered as a singleton by PenovaCoreServiceProvider; resolve it
- * anywhere with app(SettingsManager::class) — Modules included.
+ * anywhere with app(SettingsManager::class) - Modules included.
  */
 class SettingsManager
 {

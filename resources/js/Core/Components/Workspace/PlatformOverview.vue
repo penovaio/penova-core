@@ -1,6 +1,6 @@
 <script setup>
 /**
- * Core\UI — Workspace platform overview. Three counts (users, roles,
+ * Core\UI - Workspace platform overview. Three counts (users, roles,
  * unread notifications) rendered deliberately small and muted: this is
  * context for orientation, not a metrics dashboard competing with
  * Installed Modules or Platform Health for attention.

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Core\Roles — route middleware, registered as "permission" by
+ * Core\Roles - route middleware, registered as "permission" by
  * PenovaCoreServiceProvider.
  *
  * Usage (Core and Modules alike):

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Core\Roles — RBAC tables: roles, permissions and their pivots.
+ * Core\Roles - RBAC tables: roles, permissions and their pivots.
  */
 return new class extends Migration
 {

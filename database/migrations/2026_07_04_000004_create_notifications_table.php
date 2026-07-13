@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Core\Notifications — Laravel's native database notification channel.
+ * Core\Notifications - Laravel's native database notification channel.
  * Schema matches `php artisan make:notifications-table`.
  */
 return new class extends Migration
